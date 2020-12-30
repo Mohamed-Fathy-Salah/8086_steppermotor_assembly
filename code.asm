@@ -50,22 +50,30 @@ RUN PROC
     ;check on dir and jump to cw or ccw  
     TEST DIR , 1 ; 1 means ccw
     MOV CX , 4
-    jnz cww
+    JNZ CCW
     ; led on/off 
     CW: ; clock wise 
-        OUT PORTB, 01H ; led on 
-        MOV SI , STEPS
+		MOV AL  , 1
+        OUT PORTB, AL; led on 
+        LEA SI , STEPS
         c1: 
-            OUT PORTC , [SI]
+			MOV AL , [SI]
+			CALL SLEEP
+            OUT PORTC , AL
             INC SI
             LOOP c1
         RET
 
     CCW: ; anti clock wise
-        OUT PORTB, 00H ; led off
-        MOV SI , STEPS + 3
+        ; not working yet 
+		MOV AL  , 0
+        OUT PORTB, AL; led off
+        LEA SI , STEPS 
+		ADD SI , 3
         c2:
-            OUT PORTC , [SI]
+			MOV AL , [SI]
+			CALL SLEEP
+            OUT PORTC , AL
             DEC SI
             LOOP c2
     RET
@@ -74,6 +82,7 @@ RUN ENDP
 ;----------------- shahenda
 STOP PROC
     ;stop the motor without exiting the program
+    RET
 STOP ENDP
 
 ;----------------------------nashaat
@@ -93,11 +102,13 @@ GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
     and AL , 00000001B
     OUT PORTB , AL
 
+    RET
 GETSPEED ENDP
 
 ;----------------- yasser
 GETPRESSED PROC
   ; check if the stop or the rotate button is pressed 
+  RET
 GETPRESSED ENDP
 
 ;----------------- omar
@@ -107,9 +118,6 @@ SLEEP PROC
     delayloop:loop delayloop
     RET	
 SLEEP ENDP
-
-
-
 
 .EXIT
 
