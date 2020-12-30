@@ -46,49 +46,85 @@ MAIN ENDP
 
 ;-----------------fathy
 RUN PROC 
-   ;check on dir and jump to cw or ccw  
-   ; led on/off 
+    ;check on dir and jump to cw or ccw  
+    TEST DIR , 1 ; 1 means ccw
+    MOV CX , 4
+    JNZ CCW
+    ; led on/off 
     CW: ; clock wise 
+		MOV AL  , 1
+        OUT PORTB, AL; led on 
+        LEA SI , STEPS
+        c1: 
+			MOV AL , [SI]
+			CALL SLEEP
+            OUT PORTC , AL
+            INC SI
+            LOOP c1
+        RET
 
     CCW: ; anti clock wise
+        ; not working yet 
+		MOV AL  , 0
+        OUT PORTB, AL; led off
+        LEA SI , STEPS 
+		ADD SI , 3
+        c2:
+			MOV AL , [SI]
+			CALL SLEEP
+            OUT PORTC , AL
+            DEC SI
+            LOOP c2
+    RET
 RUN ENDP 
 
 ;----------------- shahenda
 STOP PROC
     ;stop the motor without exiting the program
+    RET
 STOP ENDP
 
 ;----------------------------
 GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
+   
     MOV AL , 00H
-    IN AL , PORTA
+    IN AL , PORTA                   ; Take input from potentiometer
 
-    ; computing speed
+    MOV AH , AL                     
+    MOV AL , OB
+    SHL AX , 1
+    inc AX
 
-    MOV AL , DIR
+    MOV DELAY , OFFH
+    ADD DELAY , AX
+
+    MOV AL , DIR            
     and AL , 00000011B
-    OUT PORTB , AL
+    OUT PORTB , AL                  ; set write bit in ADC
 
-    MOV CX , 00FFH
+    MOV CX , 00FFH                  ; Delay
     convert: Loop convert
 
-    and AL , 00000001B
-    OUT PORTB , AL
+    and AL , 00000001B              
+    OUT PORTB , AL                  ; Reset write bit in ADC
+
+    RET
 
 GETSPEED ENDP
 
 ;----------------- yasser
 GETPRESSED PROC
   ; check if the stop or the rotate button is pressed 
+  RET
 GETPRESSED ENDP
 
 ;----------------- omar
 SLEEP PROC
     ; delay for DELAY cycles
+    MOV CX, DELAY
+    delayloop:loop delayloop
+    RET	
 SLEEP ENDP
-
-
-
 
 .EXIT
 
