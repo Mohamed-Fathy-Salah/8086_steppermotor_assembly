@@ -16,7 +16,8 @@
     PORTC EQU 04H        ; Addresse of port C
     CTRLWORD EQU 06H     ; Addresse of port Control Word
     DELAY DW 0FFFFH      ; Delay Value that will control the motor speed
-    DIR DB 00H           ; Direction of Stepper Motor (0/1) 
+    DIR DB 00H           ; Direction of Stepper Motor (0/1)
+
     STEPS DB 00000011B,  ; Full Step Mode
              00000110B, 
              00001100B, 
@@ -46,27 +47,68 @@ MAIN ENDP
 
 ;-----------------fathy
 RUN PROC 
-   ;check on dir and jump to cw or ccw  
-   ; led on/off 
+    ;check on dir and jump to cw or ccw  
+    TEST DIR , 1 ; 1 means ccw
+    MOV CX , 4
+    JNZ CCW
+    ; led on/off 
     CW: ; clock wise 
+		MOV AL  , 1
+        OUT PORTB, AL; led on 
+        LEA SI , STEPS
+        c1: 
+			MOV AL , [SI]
+			CALL SLEEP
+            OUT PORTC , AL
+            INC SI
+            LOOP c1
+        RET
 
     CCW: ; anti clock wise
+        ; not working yet 
+		MOV AL  , 0
+        OUT PORTB, AL; led off
+        LEA SI , STEPS 
+		ADD SI , 3
+        c2:
+			MOV AL , [SI]
+			CALL SLEEP
+            OUT PORTC , AL
+            DEC SI
+            LOOP c2
+    RET
 RUN ENDP 
 
 ;----------------- shahenda
 STOP PROC
     ;stop the motor without exiting the program
+    RET
 STOP ENDP
 
-;-----------------  Nashaat
+;----------------------------nashaat
 GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
+    MOV AL , 00H
+    IN AL , PORTA
 
+    ; computing speed
 
+    MOV AL , DIR
+    and AL , 00000011B
+    OUT PORTB , AL
+
+    MOV CX , 00FFH
+    convert: Loop convert
+
+    and AL , 00000001B
+    OUT PORTB , AL
+
+    RET
 GETSPEED ENDP
 
 ;----------------- yasser
 GETPRESSED PROC
   ; check if the stop or the rotate button is pressed 
+  RET
 GETPRESSED ENDP
 
 ;----------------- omar
@@ -76,7 +118,7 @@ SLEEP PROC
     delayloop:loop delayloop
     RET	
 SLEEP ENDP
-.EXIT
 
+.EXIT
 
 end
