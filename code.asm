@@ -72,6 +72,9 @@ GETPRESSED ENDP
 ;----------------- omar
 SLEEP PROC
     ; delay for DELAY cycles
+    MOV CX, DELAY
+    delayloop:loop delayloop
+    RET	
 SLEEP ENDP
 .EXIT
 
