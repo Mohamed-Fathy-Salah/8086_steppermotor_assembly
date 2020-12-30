@@ -47,11 +47,28 @@ MAIN ENDP
 
 ;-----------------fathy
 RUN PROC 
-   ;check on dir and jump to cw or ccw  
-   ; led on/off 
+    ;check on dir and jump to cw or ccw  
+    TEST DIR , 1 ; 1 means ccw
+    MOV CX , 4
+    jnz cww
+    ; led on/off 
     CW: ; clock wise 
+        OUT PORTB, 01H ; led on 
+        MOV SI , STEPS
+        c1: 
+            OUT PORTC , [SI]
+            INC SI
+            LOOP c1
+        RET
 
     CCW: ; anti clock wise
+        OUT PORTB, 00H ; led off
+        MOV SI , STEPS + 3
+        c2:
+            OUT PORTC , [SI]
+            DEC SI
+            LOOP c2
+    RET
 RUN ENDP 
 
 ;----------------- shahenda
