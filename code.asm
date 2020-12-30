@@ -15,7 +15,7 @@
     PORTB EQU 02H        ; Addresse of port B
     PORTC EQU 04H        ; Addresse of port C
     CTRLWORD EQU 06H     ; Addresse of port Control Word
-    DELAY DW 0FFFFH      ; Delay Value that will control the motor speed
+    DELAY DW 000FFH      ; Delay Value that will control the motor speed
     DIR DB 00H           ; Direction of Stepper Motor (0/1)
 
     STEPS DB 00000011B,  ; Full Step Mode
@@ -85,22 +85,30 @@ STOP PROC
     RET
 STOP ENDP
 
-;----------------------------nashaat
+
+;-----------------Get Speed---------------
+
 GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
+
     MOV AL , 00H
-    IN AL , PORTA
+    IN AL , PORTA              ; Get input from potentiometer
 
-    ; computing speed
+    MOV AH , AL                ; Transfer input to higher AX 8-bits  
+    SHL AX , 1                 ; Shift left by one as the left most bit from input never set
+    MOV AL , 0B
 
-    MOV AL , DIR
+    MOV DELAY , 00FFH          ; Make delay its intial value
+    ADD DELAY , AX             ; compute the new DELAY
+
+    MOV AL , DIR               
     and AL , 00000011B
-    OUT PORTB , AL
+    OUT PORTB , AL             ; reset the write bits of ADC
 
-    MOV CX , 00FFH
+    MOV CX , 00FFH             ; delay
     convert: Loop convert
 
-    and AL , 00000001B
-    OUT PORTB , AL
+    and AL , 00000001B         
+    OUT PORTB , AL             ; set the write bits of ADC
 
     RET
 GETSPEED ENDP
