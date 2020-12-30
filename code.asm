@@ -16,7 +16,8 @@
     PORTC EQU 04H        ; Addresse of port C
     CTRLWORD EQU 06H     ; Addresse of port Control Word
     DELAY DW 0FFFFH      ; Delay Value that will control the motor speed
-    DIR DB 00H           ; Direction of Stepper Motor (0/1) 
+    DIR DB 00H           ; Direction of Stepper Motor (0/1)
+
     STEPS DB 00000011B,  ; Full Step Mode
              00000110B, 
              00001100B, 
@@ -75,9 +76,22 @@ STOP PROC
     ;stop the motor without exiting the program
 STOP ENDP
 
-;-----------------  Nashaat
+;----------------------------nashaat
 GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
+    MOV AL , 00H
+    IN AL , PORTA
 
+    ; computing speed
+
+    MOV AL , DIR
+    and AL , 00000011B
+    OUT PORTB , AL
+
+    MOV CX , 00FFH
+    convert: Loop convert
+
+    and AL , 00000001B
+    OUT PORTB , AL
 
 GETSPEED ENDP
 
@@ -89,8 +103,14 @@ GETPRESSED ENDP
 ;----------------- omar
 SLEEP PROC
     ; delay for DELAY cycles
+    MOV CX, DELAY
+    delayloop:loop delayloop
+    RET	
 SLEEP ENDP
-.EXIT
 
+
+
+
+.EXIT
 
 end
