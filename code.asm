@@ -49,8 +49,8 @@ MAIN ENDP
 ;-----------------fathy
 RUN PROC 
     ;check on dir and jump to cw or ccw  
-    TEST DIR , 1 ; 1 means ccw
     MOV CX , 4
+    TEST DIR , 1 ; 1 means ccw
     JNZ CCW
     ; led on/off 
     CW: ; clock wise 
@@ -58,8 +58,8 @@ RUN PROC
         OUT PORTB, AL; led on 
         LEA SI , STEPS
         c1: 
-			MOV AL , [SI]
 			CALL SLEEP
+			MOV AL , [SI]
             OUT PORTC , AL
             INC SI
             LOOP c1
@@ -72,8 +72,8 @@ RUN PROC
         LEA SI , STEPS 
 		ADD SI , 3
         c2:
-			MOV AL , [SI]
 			CALL SLEEP
+			MOV AL , [SI]
             OUT PORTC , AL
             DEC SI
             LOOP c2
@@ -83,9 +83,13 @@ RUN ENDP
 ;----------------- shahenda
 STOP PROC
     ;stop the motor without exiting the program
+     MOV DX , PORTC
+     IN AL ,DX
+     TEST AL , stpBtn   
+     JNZ MAIN
+
     RET
 STOP ENDP
-
 
 ;-----------------Get Speed---------------
 
@@ -132,14 +136,15 @@ GETPRESSED PROC     ; check if the stop or the rotate button is pressed
         XOR DIR,01H         ; xoring dir with 1 to invert the dir
 
     ENP: RET
-
 GETPRESSED ENDP
 
 ;----------------- omar
 SLEEP PROC
     ; delay for DELAY cycles
+    PUSH CX
     MOV CX, DELAY
     delayloop:loop delayloop
+    POP CX
     RET	
 SLEEP ENDP
 
