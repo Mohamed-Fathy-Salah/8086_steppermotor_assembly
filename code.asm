@@ -83,6 +83,11 @@ RUN ENDP
 ;----------------- shahenda
 STOP PROC
     ;stop the motor without exiting the program
+     MOV DX , PORTC
+     IN AL ,DX
+     TEST AL , stpBtn   
+     JNZ MAIN
+
     RET
 STOP ENDP
 
