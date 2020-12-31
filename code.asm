@@ -11,13 +11,14 @@
 
 .DATA                    ; Data segment
 
-    PORTA EQU 00H        ; Addresse of port A
-    PORTB EQU 02H        ; Addresse of port B
-    PORTC EQU 04H        ; Addresse of port C
+    PORTA EQU 00H        ; Address of port A
+    PORTB EQU 02H        ; Address of port B
+    PORTC EQU 04H        ; Address of port C
+    stpBtn  DB 10H         ; stop value That will stop the motor
+    ROTAT DB 20H         ; rotate value that will make the motor to rotate
     CTRLWORD EQU 06H     ; Addresse of port Control Word
     DELAY DW 000FFH      ; Delay Value that will control the motor speed
     DIR DB 00H           ; Direction of Stepper Motor (0/1)
-
     STEPS DB 00000011B,  ; Full Step Mode
              00000110B, 
              00001100B, 
@@ -85,7 +86,6 @@ STOP PROC
     RET
 STOP ENDP
 
-
 ;-----------------Get Speed---------------
 
 GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
@@ -114,11 +114,25 @@ GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
     MOV AX , 0B                ; Clear Al and AH
 
     RET
+
 GETSPEED ENDP
 
-;----------------- yasser
+;----------------- AhmadYasser
 GETPRESSED PROC
+
   ; check if the stop or the rotate button is pressed 
+    MOV DX, PORTC    
+    IN AL, DX   ; read the content of port c
+    TEST AL, stpBtn    ; compare port c with stop value 
+    JZ TEST2            ; go to second test 
+    CALL STOP
+    TEST2:
+        TEST AL,ROTAT   ; compare port c with rotate value
+        JZ ENP          ; exit 
+        XOR DIR,01H           ; xoring dir with 1 to invert the dir
+
+
+ENP:
   RET
 GETPRESSED ENDP
 
