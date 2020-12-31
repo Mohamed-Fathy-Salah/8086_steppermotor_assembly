@@ -121,21 +121,13 @@ GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
 
 GETSPEED ENDP
 
-;-----------------GETPRESSED----------------- 
+;-----------------REVERSE----------------- 
 
-GETPRESSED PROC     ; check if the stop or the rotate button is pressed 
-   
-    IN AL, PORTC            ; read the content of port c
-    TEST AL, stpBtn         ; see if stop button pushed
-    JZ TEST2                ; go to second test 
-    CALL STOP               ; if stop button pushed call sleep function
-    TEST2:
-        TEST AL,ROTAT       ; compare port c with rotate value
-        JZ ENP              ; exit 
-        XOR DIR,01H         ; xoring dir with 1 to invert the dir
+REVERSE PROC     ; check if the stop or the rotate button is pressed 
 
-    ENP: RET
-GETPRESSED ENDP
+
+    RET
+REVERSE ENDP
 
 ;----------------- omar
 SLEEP PROC
