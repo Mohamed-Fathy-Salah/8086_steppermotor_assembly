@@ -49,8 +49,8 @@ MAIN ENDP
 ;-----------------fathy
 RUN PROC 
     ;check on dir and jump to cw or ccw  
-    TEST DIR , 1 ; 1 means ccw
     MOV CX , 4
+    TEST DIR , 1 ; 1 means ccw
     JNZ CCW
     ; led on/off 
     CW: ; clock wise 
@@ -58,8 +58,8 @@ RUN PROC
         OUT PORTB, AL; led on 
         LEA SI , STEPS
         c1: 
-			MOV AL , [SI]
 			CALL SLEEP
+			MOV AL , [SI]
             OUT PORTC , AL
             INC SI
             LOOP c1
@@ -72,8 +72,8 @@ RUN PROC
         LEA SI , STEPS 
 		ADD SI , 3
         c2:
-			MOV AL , [SI]
 			CALL SLEEP
+			MOV AL , [SI]
             OUT PORTC , AL
             DEC SI
             LOOP c2
@@ -139,8 +139,10 @@ GETPRESSED ENDP
 ;----------------- omar
 SLEEP PROC
     ; delay for DELAY cycles
+    PUSH CX
     MOV CX, DELAY
     delayloop:loop delayloop
+    POP CX
     RET	
 SLEEP ENDP
 
