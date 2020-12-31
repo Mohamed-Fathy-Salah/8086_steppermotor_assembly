@@ -125,7 +125,12 @@ GETSPEED ENDP
 
 REVERSE PROC     ; check if the stop or the rotate button is pressed 
 
-
+    IN AL, PORTC            ; read the content of port c
+	AND AL , ROTATE
+	MOV CX , 5
+	shift : SHR AL,1
+			LOOP  shift
+	MOV DIR , AL
     RET
 REVERSE ENDP
 
