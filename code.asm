@@ -17,7 +17,7 @@
     stpBtn  DB 10H         ; stop value That will stop the motor
     ROTAT DB 20H         ; rotate value that will make the motor to rotate
     CTRLWORD EQU 06H     ; Addresse of port Control Word
-    DELAY DW 0FFFFH      ; Delay Value that will control the motor speed
+    DELAY DW 000FFH      ; Delay Value that will control the motor speed
     DIR DB 00H           ; Direction of Stepper Motor (0/1)
     STEPS DB 00000011B,  ; Full Step Mode
              00000110B, 
@@ -86,29 +86,32 @@ STOP PROC
     RET
 STOP ENDP
 
-;----------------------------
+;-----------------Get Speed---------------
+
 GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
-   
-    MOV AL , 00H
-    IN AL , PORTA                   ; Take input from potentiometer
 
-    MOV AH , AL                     
-    MOV AL , OB
-    SHL AX , 1
-    inc AX
+    MOV AX , 0B                ; Clear Al and AH
+    IN AL , PORTA              ; Get input from potentiometer
 
-    MOV DELAY , OFFH
-    ADD DELAY , AX
+    MOV AH , AL                ; Transfer input to higher AX 8-bits  
+    MOV AL , 0B
+    SHL AX , 1                 ; Shift left by one as the left most bit from input never set
+    inc AH                     ; Set the shifted bit
 
-    MOV AL , DIR            
+    MOV DELAY , 00FFH          ; Make delay its intial value
+    ADD DELAY , AX             ; compute the new DELAY
+
+    MOV AL , DIR               
     and AL , 00000011B
-    OUT PORTB , AL                  ; set write bit in ADC
+    OUT PORTB , AL             ; reset the write bits of ADC
 
-    MOV CX , 00FFH                  ; Delay
+    MOV CX , 00FFH             ; delay
     convert: Loop convert
 
-    and AL , 00000001B              
-    OUT PORTB , AL                  ; Reset write bit in ADC
+    and AL , 00000001B         
+    OUT PORTB , AL             ; set the write bits of ADC
+
+    MOV AX , 0B                ; Clear Al and AH
 
     RET
 
@@ -118,7 +121,6 @@ GETSPEED ENDP
 GETPRESSED PROC
 
   ; check if the stop or the rotate button is pressed 
-<<<<<<< HEAD
     MOV DX, PORTC    
     IN AL, DX   ; read the content of port c
     TEST AL, stpBtn    ; compare port c with stop value 
@@ -131,11 +133,7 @@ GETPRESSED PROC
 
 
 ENP:
-
-
-=======
   RET
->>>>>>> 134d156adfba744d25de619882810fe6ecd0fb1c
 GETPRESSED ENDP
 
 ;----------------- omar
