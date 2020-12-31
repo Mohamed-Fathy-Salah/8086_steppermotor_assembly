@@ -97,23 +97,22 @@ GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
 
     MOV AX , 0B                ; Clear Al and AH
     IN AL , PORTA              ; Get input from potentiometer
-
     MOV AH , AL                ; Transfer input to higher AX 8-bits  
     MOV AL , 0B
     SHL AX , 1                 ; Shift left by one as the left most bit from input never set
     inc AH                     ; Set the shifted bit
 
-    MOV DELAY , 00FFH          ; Make delay its intial value
+    MOV DELAY , 09FFH          ; Make delay its intial value
     ADD DELAY , AX             ; compute the new DELAY
 
     MOV AL , DIR               
-    and AL , 00000011B
+    OR AL , 00000010B
     OUT PORTB , AL             ; reset the write bits of ADC
 
     MOV CX , 00FFH             ; delay
     convert: Loop convert
 
-    and AL , 00000001B         
+    AND AL , 00000001B         
     OUT PORTB , AL             ; set the write bits of ADC
 
     MOV AX , 0B                ; Clear Al and AH
