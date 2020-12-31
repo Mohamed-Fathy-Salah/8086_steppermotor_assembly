@@ -14,7 +14,7 @@
     PORTA EQU 00H        ; Address of port A
     PORTB EQU 02H        ; Address of port B
     PORTC EQU 04H        ; Address of port C
-    stpBtn  DB 10H         ; stop value That will stop the motor
+    stpBtn DB 10H        ; stop value That will stop the motor
     ROTAT DB 20H         ; rotate value that will make the motor to rotate
     CTRLWORD EQU 06H     ; Addresse of port Control Word
     DELAY DW 000FFH      ; Delay Value that will control the motor speed
@@ -122,23 +122,20 @@ GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
 
 GETSPEED ENDP
 
-;----------------- AhmadYasser
-GETPRESSED PROC
+;-----------------GETPRESSED----------------- 
 
-  ; check if the stop or the rotate button is pressed 
-    MOV DX, PORTC    
-    IN AL, DX   ; read the content of port c
-    TEST AL, stpBtn    ; compare port c with stop value 
-    JZ TEST2            ; go to second test 
-    CALL STOP
+GETPRESSED PROC     ; check if the stop or the rotate button is pressed 
+   
+    IN AL, PORTC            ; read the content of port c
+    TEST AL, stpBtn         ; see if stop button pushed
+    JZ TEST2                ; go to second test 
+    CALL STOP               ; if stop button pushed call sleep function
     TEST2:
-        TEST AL,ROTAT   ; compare port c with rotate value
-        JZ ENP          ; exit 
-        XOR DIR,01H           ; xoring dir with 1 to invert the dir
+        TEST AL,ROTAT       ; compare port c with rotate value
+        JZ ENP              ; exit 
+        XOR DIR,01H         ; xoring dir with 1 to invert the dir
 
-
-ENP:
-  RET
+    ENP: RET
 GETPRESSED ENDP
 
 ;----------------- omar
