@@ -28,7 +28,10 @@
  [ADC0804]: <https://www.engineersgarage.com/knowledge_share/adc0804-pinout/> 
  [L293D]: <https://components101.com/l293d-pinout-features-datasheet>
  [2N1711]: <https://www.dummies.com/programming/electronics/diy-projects/electronics-projects-how-to-create-a-transistor-not-gate-circuit/>
-
+ 
+ # Circuit Diagram
+ ![alt circuit](https://raw.githubusercontent.com/Mohamed-Fathy-Salah/8086_steppermotor_assembly/main/images/Circuit%20Diagram.PNG)
+ 
 # Features
 * Change direction of rotation
 
