@@ -20,3 +20,16 @@
  [Stepper Motor]: <https://www.monolithicpower.com/en/stepper-motors-basics-types-uses>
  [ADC0804]: <https://www.engineersgarage.com/knowledge_share/adc0804-pinout/> 
  [L293D]: <https://components101.com/l293d-pinout-features-datasheet>
+
+# Features
+* Change direction of rotation
+
+* Change rotation speed
+    | Slow | Mid | Fast |
+    |:----:|:----:|:----:|
+    |![slow](/images/slow.gif "slow speed rotation")|![mid](/images/mid.gif "mid speed rotation")|![fast](/images/fast.gif "fast speed rotation") |
+    
+    
+* On/Off Motor
+    
+
