@@ -8,34 +8,39 @@
 
 .MODEL SMALL
 
-.DATA                    ; Data segment
+.DATA                        ; Data segment
 
-    PORTA EQU 00H        ; Address of port A
-    PORTB EQU 02H        ; Address of port B
-    PORTC EQU 04H        ; Address of port C
-    CTRLWORD EQU 06H     ; Addresse of port Control Word
-    ROTATE DB 20H        ; rotate value that will make the motor to rotate
-    DELAY  DW 0H         ; Delay Value that will control the motor speed
-    DIR    DB 00H        ; Direction of Stepper Motor (0/1)
-    STEPS  DB 00000011B, ; Full Step Mode
+    PORTA EQU 00H            ; Address of port A
+    PORTB EQU 02H            ; Address of port B
+    PORTC EQU 04H            ; Address of port C
+    CTRLWORD EQU 06H         ; Addresse of port Control Word
+    ROTATE DB 20H            ; Addresse of Rotate Switch that reverse stepper motor direction
+    DELAY  DW 0H             ; DELAY Value that will control the stepper motor speed
+    DIR    DB 00H            ; Direction of Stepper Motor (0/1)
+    STEPS  DB 00000011B,     ; Full Step Mode
               00000110B, 
               00001100B, 
               00001001B   
      
 
 
-.STACK  10H              ; Stack segment
+.STACK  10H                  ; Stack segment
 
 
-.CODE                    ; Code segment
+.CODE                        ; Code segment
 
 .STARTUP
 
 ;---------Configration of PORTS---------
-    MOV AL ,10010000B    ; port_A --> input , port_B --> output , port-C --> (input-output) 
-    OUT CTRLWORD , AL
+    MOV AL ,10010000B         
+    OUT CTRLWORD , AL        ; Set Control Word
+
+    ; port_A --> input 
+    ; port_B --> output 
+    ; port_C --> (input-output)
 
 ;-------------MAIN LOOP----------------
+
 MAIN PROC
     CALL GETSPEED
     CALL REVERSE
@@ -50,7 +55,7 @@ RUN PROC            ; 1- Check the direction button (DIC) to determine the step 
                     ; 2- Run in the determined direction
 
     MOV  CX  , 4                 ; Set counter by 4
-    TEST DIR , 1                 ; IF DIR button is pressed then step in reverse direction
+    TEST DIR , 1                 ; IF Rotate Switch is pressed then step in reverse direction (DIR=1)
     JNZ  CCW                     
    
     CW:                          ; Clock wise direction
@@ -79,17 +84,17 @@ RUN ENDP
 ;---------------GET_SPEED function---------------
 
 GETSPEED PROC       ; 1- Get input from potentiometer to calculate and set DELAY
-                    ; 2- 
-                    ; 3- 
+                    ; 2- Set and Reset Write bit of ADC (to converts analog value to digital vale)
+                    ; 3- Turn the LED on if the DIR = 1 (step in reverse direction (CCW))
 
     IN  AL , PORTA              ; Get input from potentiometer in AL
-	MOV BL , 30                 
+	MOV BL , 35                 
 	MUL BL                      ; AX = AX * BL 
 	ADD AX , 06FFH              ; Add AX to intial value of DELAY (initial value = the smallest value of DELAY) 
     MOV DELAY , AX              ; DELAY = AX + intial value
 
-    MOV AL , DIR                ;
-    OR  AL , 00000010B
+    MOV AL , DIR                ; Take value of DIR
+    OR  AL , 00000010B          ; Check if DIR = 1 , then turn led on 
     OUT PORTB , AL              ; Reset the write bits of ADC
 
     MOV CX , 00FFH              ; delay
@@ -106,25 +111,34 @@ GETSPEED ENDP
 
 ;---------------REVERSE function----------------- 
 
-REVERSE PROC     ; Update DIR (direction variable) by 1 if 
+REVERSE PROC           ; Update DIR (direction variable) by :
+                       ; 1 if Rotate Switch is pressed
+                       ; 0 if Rotate Switch is Released
 
-    IN AL, PORTC            ; read the content of port c
-	AND AL , ROTATE
-	MOV BX ,32
-	DIV BX
-	MOV DIR , AL
+    IN AL, PORTC               ; Read the content of port_C
+	AND AL , ROTATE            ; Check only the bit of Rotate Switch
+	MOV BX ,32                 
+	DIV BX                     ; Shift AX right by 5 bits 
+	MOV DIR , AL               ; Set DIR by new value
+
     RET
 
 REVERSE ENDP
 
-;----------------- omar
-SLEEP PROC
-    ; delay for DELAY cycles
-    PUSH CX
-    MOV CX, DELAY
-    delayloop:loop delayloop
-    POP CX
+;---------------SLEEP function------------------
+
+SLEEP PROC             ; Delay for DELAY cycles 
+
+    PUSH CX                  ; Store old counter value in stack
+
+    MOV CX, DELAY            ; Set new counter by DELAY value
+    delayloop:               ; Loop for DELAY
+    LOOP delayloop
+
+    POP CX                   ; Destore old counter value from stack
+
     RET	
+
 SLEEP ENDP
 
 .EXIT
