@@ -35,6 +35,9 @@
 # Features
 * Change direction of rotation
 
+    ![rotate](/images/rotate.gif "rotate GIF")
+
+
 * Change rotation speed
     | Slow | Mid | Fast |
     |:----:|:----:|:----:|
@@ -42,5 +45,7 @@
     
     
 * On/Off Motor
-    
+
+    ![on/off](/images/onoff.gif "on/off GIF")
+
 
