@@ -6,6 +6,12 @@
 - Stepper Motor
 - ADC0804 Digital to Analog Converter
 - L293D Motor Driver Ic
+- 2N1711 NPN Transitor
+- Resistors
+- LED
+- Switch
+- potentiometer
+- Battery
 # Resources
 * [8086] - 8086 pinout
 * [74HC373] - Latch pinout
@@ -13,6 +19,7 @@
 * [Stepper Motor] - Stepper Motor
 * [ADC0804] - Digital to Analog Converter
 * [L293D] - Motor Driver Ic
+* [2N1711] -NPN transistor
 
  [8086]: <https://www.tutorialspoint.com/microprocessor/microprocessor_8086_pin_configuration.htm>
  [74HC373]: <https://assets.nexperia.com/documents/data-sheet/74HC_HCT373.pdf>
@@ -20,6 +27,7 @@
  [Stepper Motor]: <https://www.monolithicpower.com/en/stepper-motors-basics-types-uses>
  [ADC0804]: <https://www.engineersgarage.com/knowledge_share/adc0804-pinout/> 
  [L293D]: <https://components101.com/l293d-pinout-features-datasheet>
+ [2N1711]: <https://www.dummies.com/programming/electronics/diy-projects/electronics-projects-how-to-create-a-transistor-not-gate-circuit/>
 
 # Features
 * Change direction of rotation
