@@ -42,10 +42,12 @@
 ;-------------MAIN LOOP----------------
 
 MAIN PROC
+
     CALL GETSPEED
     CALL REVERSE
     CALL RUN 
-    JMP MAIN
+    JMP  MAIN
+    
     RET
 MAIN ENDP
 
@@ -61,22 +63,22 @@ RUN PROC            ; 1- Check the direction button (DIC) to determine the step 
     CW:                          ; Clock wise direction
         LEA SI , STEPS           ; Set pointer to STEPS array
         c1:                      ; Step 
-			CALL SLEEP
-			MOV AL , [SI]
-            OUT PORTC , AL
-            INC SI
-            LOOP c1
+	CALL SLEEP
+	MOV  AL    ,[SI]
+        OUT  PORTC , AL
+        INC  SI
+        LOOP c1
         RET
 
     CCW:                         ; Anti clock wise direction
-        LEA SI , STEPS           ; Set pointer to STEPS array
-		ADD SI , 3               ; Make the pointer point to last of STEPS array
+        LEA  SI  , STEPS         ; Set pointer to STEPS array
+	ADD  SI  , 3             ; Make the pointer point to last of STEPS array
         c2:                      ; Step in reverse direction
-			CALL SLEEP
-			MOV AL , [SI]
-            OUT PORTC , AL
-            DEC SI
-            LOOP c2
+	CALL SLEEP
+	MOV  AL    ,[SI]
+        OUT  PORTC , AL
+        DEC  SI
+        LOOP c2
     RET
 
 RUN ENDP 
@@ -88,9 +90,9 @@ GETSPEED PROC       ; 1- Get input from potentiometer to calculate and set DELAY
                     ; 3- Turn the LED on if the DIR = 1 (step in reverse direction (CCW))
 
     IN  AL , PORTA              ; Get input from potentiometer in AL
-	MOV BL , 35                 
-	MUL BL                      ; AX = AX * BL 
-	ADD AX , 06FFH              ; Add AX to intial value of DELAY (initial value = the smallest value of DELAY) 
+    MOV BL , 35                 
+    MUL BL                      ; AX = AX * BL 
+    ADD AX , 06FFH              ; Add AX to intial value of DELAY (initial value = the smallest value of DELAY) 
     MOV DELAY , AX              ; DELAY = AX + intial value
 
     MOV AL , DIR                ; Take value of DIR
@@ -116,10 +118,10 @@ REVERSE PROC           ; Update DIR (direction variable) by :
                        ; 0 if Rotate Switch is Released
 
     IN AL, PORTC               ; Read the content of port_C
-	AND AL , ROTATE            ; Check only the bit of Rotate Switch
-	MOV BX ,32                 
-	DIV BX                     ; Shift AX right by 5 bits 
-	MOV DIR , AL               ; Set DIR by new value
+    AND AL , ROTATE            ; Check only the bit of Rotate Switch
+    MOV BX ,32                 
+    DIV BX                     ; Shift AX right by 5 bits 
+    MOV DIR , AL               ; Set DIR by new value
 
     RET
 
@@ -127,7 +129,7 @@ REVERSE ENDP
 
 ;---------------SLEEP function------------------
 
-SLEEP PROC             ; Delay for DELAY cycles 
+SLEEP PROC            ; Delay for DELAY cycles 
 
     PUSH CX                  ; Store old counter value in stack
 
