@@ -10,10 +10,18 @@
 
 .DATA                        ; Data segment
 
-    PORTA EQU 00H            ; Address of port A
-    PORTB EQU 02H            ; Address of port B
-    PORTC EQU 04H            ; Address of port C
-    CTRLWORD EQU 06H         ; Addresse of port Control Word
+    PORTA EQU 10H            ; Address of port A
+    PORTB EQU 12H            ; Address of port B
+    PORTC EQU 14H            ; Address of port C
+    CTRLWORD EQU 16H         ; Addresse of port Control Word
+    
+                             ; Device B
+    PORTAB EQU 08H           ; Address of port A
+    PORTBB EQU 0AH           ; Address of port B
+    PORTCB EQU 0CH           ; Address of port C
+    BCTRLWORD EQU 0EH         ; Addresse of port Control Word
+
+
     DELAY  DW 0H             ; DELAY Value that will control the stepper motor speed
     HDIR    DB 00H           ; Direction of Stepper Motor (0/1) and (step / half step)
     RHS DB 30H               ; direction and half step switches at port B
@@ -47,13 +55,18 @@
     ; port_B --> output 
     ; port_C --> (input-output)
 
+
+    MOV AL ,10000000B         
+    OUT BCTRLWORD , AL        ; Set Control Word
+
 ;-------------MAIN LOOP----------------
 
 MAIN PROC
 
     CALL GETSPEED
     CALL GETPRESSED
-    CALL RUN 
+    CALL RUN
+    CALL DISPLAY 
     JMP MAIN
 
     RET
@@ -150,6 +163,18 @@ SLEEP PROC            ; Delay for DELAY cycles
     RET	
 
 SLEEP ENDP
+
+DISPLAY PROC
+
+    ; ARBITARY VALUES FOR NOW
+    MOV AL, 0ABH
+    OUT PORTAB, AL
+    MOV AL, 0CH
+    OUT PORTBB, AL
+    
+    RET
+
+DISPLAY ENDP
 
 .EXIT
 
