@@ -45,11 +45,12 @@
 MAIN PROC
 
     CALL GETSPEED
-    CALL REVERSE
+    CALL GETPRESSED
     CALL RUN 
-    JMP  MAIN
-    
+    JMP MAIN
+
     RET
+    
 MAIN ENDP
 
 ;-----------RUN function--------------
