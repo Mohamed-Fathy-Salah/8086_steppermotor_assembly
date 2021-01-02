@@ -55,34 +55,39 @@ MAIN ENDP
 
 ;-----------RUN function--------------
 
-RUN PROC            ; 1- Check the direction button (DIC) to determine the step diection (cw/ccw) 
-                    ; 2- Run in the determined direction
-
-    MOV  CX  , 4                 ; Set counter by 4
-    TEST DIR , 1                 ; IF Rotate Switch is pressed then step in reverse direction (DIR=1)
-    JNZ  CCW                     
-   
-    CW:                          ; Clock wise direction
-        LEA SI , STEPS           ; Set pointer to STEPS array
-        c1:                      ; Step 
-	CALL SLEEP
-	MOV  AL    ,[SI]
-        OUT  PORTC , AL
-        INC  SI
-        LOOP c1
+RUN PROC 
+    ;check on dir and jump to cw or ccw  
+    TEST HDIR , 1
+    JNZ a
+    MOV CX , 4
+    LEA SI , STEPS
+    JMP b
+    a: 
+    LEA SI, HSTEPS
+    MOV CX , 8
+    b:
+    TEST HDIR , 2 ; 1 means ccw
+    JNZ CCW
+    CW: ; clock wise 
+        c1: 
+            CALL SLEEP
+            MOV AL , [SI]
+            OUT PORTC , AL
+            INC SI
+            LOOP c1
         RET
-
-    CCW:                         ; Anti clock wise direction
-        LEA  SI  , STEPS         ; Set pointer to STEPS array
-	ADD  SI  , 3             ; Make the pointer point to last of STEPS array
-        c2:                      ; Step in reverse direction
-	CALL SLEEP
-	MOV  AL    ,[SI]
-        OUT  PORTC , AL
-        DEC  SI
-        LOOP c2
+ 
+    CCW: ; anti clock wise
+        DEC CX
+        ADD SI , CX
+        INC CX
+        c2:
+            CALL SLEEP
+            MOV AL , [SI]
+            OUT PORTC , AL
+            DEC SI
+            LOOP c2
     RET
-
 RUN ENDP 
 
 ;---------------GET_SPEED function---------------
