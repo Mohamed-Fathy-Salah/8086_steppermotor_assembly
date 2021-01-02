@@ -16,7 +16,8 @@
     CTRLWORD EQU 06H         ; Addresse of port Control Word
     ROTATE DB 20H            ; Addresse of Rotate Switch that reverse stepper motor direction
     DELAY  DW 0H             ; DELAY Value that will control the stepper motor speed
-    DIR    DB 00H            ; Direction of Stepper Motor (0/1)
+    HDIR    DB 00H           ; Direction of Stepper Motor (0/1) and (step / half step)
+    RHS DB 30H               ;
     STEPS  DB 00000011B,     ; Full Step Mode
               00000110B, 
               00001100B, 
