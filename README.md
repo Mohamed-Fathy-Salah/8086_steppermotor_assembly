@@ -47,5 +47,13 @@
 * On/Off Motor
 
     ![on/off](/images/onoff.gif "on/off GIF")
+    
+    
+* Full/Half step
+
+    ![on/off](/images/halfstepfullstep.gif "half/fullstep GIF")    
+    
+    
+
 
 
