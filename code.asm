@@ -111,21 +111,16 @@ GETSPEED PROC       ; 1- Get input from potentiometer to calculate and set DELAY
 
 GETSPEED ENDP
 
-;---------------REVERSE function----------------- 
+;---------------GETPRESSED function----------------- 
 
-REVERSE PROC           ; Update DIR (direction variable) by :
-                       ; 1 if Rotate Switch is pressed
-                       ; 0 if Rotate Switch is Released
-
-    IN AL, PORTC               ; Read the content of port_C
-    AND AL , ROTATE            ; Check only the bit of Rotate Switch
-    MOV BX ,32                 
-    DIV BX                     ; Shift AX right by 5 bits 
-    MOV DIR , AL               ; Set DIR by new value
-
+GETPRESSED PROC
+    IN AL, PORTC            ; read the content of port c
+    AND AL , RHS
+    MOV BX ,16
+    DIV BX
+    MOV HDIR , AL
     RET
-
-REVERSE ENDP
+GETPRESSED ENDP
 
 ;---------------SLEEP function------------------
 
