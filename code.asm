@@ -90,32 +90,33 @@ RUN PROC
     RET
 RUN ENDP 
 
-;---------------GET_SPEED function---------------
+;-----------------Get Speed---------------
+ 
+GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
+ 
+    IN AL , PORTA              ; Get input from potentiometer
+    MOV BL , 20
+    MUL BL
+    ADD AX,06FFH
+    MOV DELAY , AX           ; Make delay its intial value
 
-GETSPEED PROC       ; 1- Get input from potentiometer to calculate and set DELAY
-                    ; 2- Set and Reset Write bit of ADC (to converts analog value to digital vale)
-                    ; 3- Turn the LED on if the DIR = 1 (step in reverse direction (CCW))
+    MOV BL, HDIR
+    SHR BL,1
+    MOV AL , BL
 
-    IN  AL , PORTA              ; Get input from potentiometer in AL
-    MOV BL , 35                 
-    MUL BL                      ; AX = AX * BL 
-    ADD AX , 06FFH              ; Add AX to intial value of DELAY (initial value = the smallest value of DELAY) 
-    MOV DELAY , AX              ; DELAY = AX + intial value
-
-    MOV AL , DIR                ; Take value of DIR
-    OR  AL , 00000010B          ; Check if DIR = 1 , then turn led on 
-    OUT PORTB , AL              ; Reset the write bits of ADC
-
-    MOV CX , 00FFH              ; delay
+    OR AL , 00000010B
+    OUT PORTB , AL             ; reset the write bits of ADC
+ 
+    MOV CX , 00FFH             ; delay
     convert: Loop convert
-
+ 
     AND AL , 00000001B         
-    OUT PORTB , AL              ; Set the write bits of ADC
-
-    MOV AX , 0B                 ; Clear Al and AH
-
+    OUT PORTB , AL             ; set the write bits of ADC
+ 
+    MOV AX , 0B                ; Clear Al and AH
+ 
     RET
-
+ 
 GETSPEED ENDP
 
 ;---------------GETPRESSED function----------------- 
