@@ -41,7 +41,7 @@
 			  00001001B
 
 
-.STACK  100H                  ; Stack segment
+.STACK  10H                  ; Stack segment
 
 
 .CODE                        ; Code segment
@@ -173,35 +173,25 @@ SLEEP ENDP
 
 DISPLAY PROC
     
-    PUSH AX
-    PUSH BX
-    PUSH DX
-    
     MOV AX, RESULT
     MOV BX, 10
-
+	MOV DX ,0 
+	
     DIV BX
-    XCHG AX, DX
+    XCHG AL, DL
     OUT PORTCB, AL
-    XCHG AX, DX
-    MOV DX, 0H
+    XCHG AL, DL
+    MOV DL, 0
 
     DIV BX
-    XCHG AX, DX
+    XCHG AL, DL
     OUT PORTBB, AL
-    XCHG AX, DX
-    MOV DX, 0H
+    MOV AL, DL
 
-    DIV BX
-    XCHG AX, DX
+    DIV BL
+	MOV AL,AH
     OUT PORTAB, AL
-    XCHG AX, DX
-    MOV DX, 0H
 
-
-    POP DX
-    POP BX
-    POP AX
     RET
 
 DISPLAY ENDP
@@ -209,20 +199,15 @@ DISPLAY ENDP
 ;---------------GETRESULT function------------------
 
 GETRESULT PROC
-    PUSH AX
-    PUSH BX
-    PUSH DX
+
     MOV AX,DELAY
-    MOV BX, 0000H
     MOV BX,64H
     MUL BX
     MOV BX,185CH
     DIV BX
-    MOV RESULT,0080H
+    MOV RESULT,80H
     SUB RESULT,AX
-    POP DX
-    POP BX
-    POP AX
+	
     RET
 
 GETRESULT ENDP
