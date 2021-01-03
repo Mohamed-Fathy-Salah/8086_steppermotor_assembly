@@ -21,10 +21,11 @@
     PORTCB EQU 0CH           ; Address of port C
     BCTRLWORD EQU 0EH         ; Addresse of port Control Word
 
-
     DELAY  DW 0H             ; DELAY Value that will control the stepper motor speed
     HDIR    DB 00H           ; Direction of Stepper Motor (0/1) and (step / half step)
     RHS DB 30H               ; direction and half step switches at port B
+    RESULT DW 0H             ; to hold the value for the 7-seg display
+
     STEPS  DB 00000011B,     ; Full Step Mode
               00000110B, 
               00001100B, 
@@ -40,7 +41,7 @@
 			  00001001B
 
 
-.STACK  10H                  ; Stack segment
+.STACK  100H                  ; Stack segment
 
 
 .CODE                        ; Code segment
@@ -48,6 +49,7 @@
 .STARTUP
 
 ;---------Configration of PORTS---------
+    ; Device A
     MOV AL ,10010000B         
     OUT CTRLWORD , AL        ; Set Control Word
 
@@ -55,9 +57,12 @@
     ; port_B --> output 
     ; port_C --> (input-output)
 
-
+    ; Device B
     MOV AL ,10000000B         
     OUT BCTRLWORD , AL        ; Set Control Word
+
+    ; port_A --> output 
+    ; port_B --> output 
 
 ;-------------MAIN LOOP----------------
 
@@ -76,36 +81,37 @@ MAIN ENDP
 ;-----------RUN function--------------
 
 RUN PROC 
-    TEST HDIR , 1           ;check on half step 
-    JNZ a                   ;jump to a if not zero
-    MOV CX , 4              ;here code for full step,  cx = length of STEPS array
-    LEA SI , STEPS          ;si = offset of steps array
+    ;check on dir and jump to cw or ccw  
+    TEST HDIR , 1
+    JNZ a
+    MOV CX , 4
+    LEA SI , STEPS
     JMP b
     a: 
-    LEA SI, HSTEPS          ;here code for half step , si = offset of hsteps array
-    MOV CX , 8              ;cx = length of hsteps array
+    LEA SI, HSTEPS
+    MOV CX , 8
     b:
-    TEST HDIR , 2           ;2 means ccw and 0 means cw
+    TEST HDIR , 2 ; 2 means ccw and 0 means cw
     JNZ CCW
     CW: ; clock wise 
         c1: 
-            CALL SLEEP      ;sleep for delay seconds to control the speed of rotation
+            CALL SLEEP
             MOV AL , [SI]
-            OUT PORTC , AL  ;write on the motor the current step
-            INC SI          
-            LOOP c1         ;do this for all elements in the array
+            OUT PORTC , AL
+            INC SI
+            LOOP c1
         RET
  
-    CCW: ; counter clock wise
+    CCW: ; anti clock wise
         DEC CX
-        ADD SI , CX         ;si += cx - 1 , which is the last element in the array (step/hstep)
+        ADD SI , CX
         INC CX
         c2:
-            CALL SLEEP      ;sleep for delay seconds to control the speed of rotation
+            CALL SLEEP
             MOV AL , [SI]
-            OUT PORTC , AL  ;write on the motor the current step
+            OUT PORTC , AL
             DEC SI
-            LOOP c2         ;do this for all elements in the array
+            LOOP c2
     RET
 RUN ENDP 
 
@@ -163,17 +169,64 @@ SLEEP PROC            ; Delay for DELAY cycles
 
 SLEEP ENDP
 
-DISPLAY PROC
+;---------------DISPLAY function------------------
 
-    ; ARBITARY VALUES FOR NOW
-    MOV AL, 0ABH
-    OUT PORTAB, AL
-    MOV AL, 0CH
-    OUT PORTBB, AL
+DISPLAY PROC
+    CALL GETRESULT
     
+    PUSH AX
+    PUSH BX
+    PUSH DX
+    
+    MOV AX, RESULT
+    MOV BX, 10
+
+    DIV BX
+    XCHG AX, DX
+    OUT PORTCB, AL
+    XCHG AX, DX
+    MOV DX, 0H
+
+    DIV BX
+    XCHG AX, DX
+    OUT PORTBB, AL
+    XCHG AX, DX
+    MOV DX, 0H
+
+    DIV BX
+    XCHG AX, DX
+    OUT PORTAB, AL
+    XCHG AX, DX
+    MOV DX, 0H
+
+
+    POP DX
+    POP BX
+    POP AX
     RET
 
 DISPLAY ENDP
+
+;---------------GETRESULT function------------------
+
+GETRESULT PROC
+    PUSH AX
+    PUSH BX
+    PUSH DX
+    MOV AX,DELAY
+    MOV BX, 0000H
+    MOV BX,64H
+    MUL BX
+    MOV BX,185CH
+    DIV BX
+    MOV RESULT,0080H
+    SUB RESULT,AX
+    POP DX
+    POP BX
+    POP AX
+    RET
+
+GETRESULT ENDP
 
 .EXIT
 
