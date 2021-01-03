@@ -21,10 +21,11 @@
     PORTCB EQU 0CH           ; Address of port C
     BCTRLWORD EQU 0EH         ; Addresse of port Control Word
 
-
     DELAY  DW 0H             ; DELAY Value that will control the stepper motor speed
     HDIR    DB 00H           ; Direction of Stepper Motor (0/1) and (step / half step)
     RHS DB 30H               ; direction and half step switches at port B
+    RESULT DW 0H             ; to hold the value for the 7-seg display
+
     STEPS  DB 00000011B,     ; Full Step Mode
               00000110B, 
               00001100B, 
@@ -39,8 +40,12 @@
 			  00001000B,
 			  00001001B
 
+    SEG_READINGS DB 00000000B,
+                    00000000B,
+                    00000000
 
-.STACK  10H                  ; Stack segment
+
+.STACK  100H                  ; Stack segment
 
 
 .CODE                        ; Code segment
@@ -48,6 +53,7 @@
 .STARTUP
 
 ;---------Configration of PORTS---------
+    ; Device A
     MOV AL ,10010000B         
     OUT CTRLWORD , AL        ; Set Control Word
 
@@ -55,9 +61,12 @@
     ; port_B --> output 
     ; port_C --> (input-output)
 
-
+    ; Device B
     MOV AL ,10000000B         
     OUT BCTRLWORD , AL        ; Set Control Word
+
+    ; port_A --> output 
+    ; port_B --> output 
 
 ;-------------MAIN LOOP----------------
 
@@ -164,17 +173,65 @@ SLEEP PROC            ; Delay for DELAY cycles
 
 SLEEP ENDP
 
-DISPLAY PROC
+;---------------DISPLAY function------------------
 
-    ; ARBITARY VALUES FOR NOW
-    MOV AL, 0ABH
+DISPLAY PROC
+    CALL GETRESULT
+    
+    PUSH CX
+
+    mov AX,RESULT
+    mov CX,3
+    mov BL,10
+    MOV SI, 0
+    myL:
+        div BL
+        mov SEG_READINGS[SI],AH
+        INC SI
+        LOOP myL
+    
+
+    MOV AL, SEG_READINGS[0]
     OUT PORTAB, AL
-    MOV AL, 0CH
+    mov CX,4
+    A:
+        SHL AL, 1
+        LOOP A
+    OR AL, SEG_READINGS[1]
+    OUT PORTAB, AL
+    
+    MOV AL, SEG_READINGS[2]
     OUT PORTBB, AL
     
+    MOV AX, 0
+
+    POP CX
     RET
 
 DISPLAY ENDP
+
+;---------------GETRESULT function------------------
+
+GETRESULT PROC
+    PUSH AX
+    PUSH BX
+    PUSH DX
+    MOV AX,DELAY
+    MOV BX, 0000H
+    MOV BX,64H
+    MUL BX
+    MOV BX,185CH
+    DIV BX
+    MOV RESULT,0080H
+    SUB RESULT,AX
+    POP DX
+    POP BX
+    POP AX
+    RET
+
+GETRESULT ENDP
+
+
 
 .EXIT
 
