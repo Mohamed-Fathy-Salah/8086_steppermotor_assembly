@@ -21,10 +21,11 @@
     PORTCB EQU 0CH           ; Address of port C
     BCTRLWORD EQU 0EH         ; Addresse of port Control Word
 
-
     DELAY  DW 0H             ; DELAY Value that will control the stepper motor speed
     HDIR    DB 00H           ; Direction of Stepper Motor (0/1) and (step / half step)
     RHS DB 30H               ; direction and half step switches at port B
+    RESULT DW 0H             ; to hold the value for the 7-seg display
+
     STEPS  DB 00000011B,     ; Full Step Mode
               00000110B, 
               00001100B, 
@@ -40,7 +41,7 @@
 			  00001001B
 
 
-.STACK  10H                  ; Stack segment
+.STACK  100H                  ; Stack segment
 
 
 .CODE                        ; Code segment
@@ -48,6 +49,7 @@
 .STARTUP
 
 ;---------Configration of PORTS---------
+    ; Device A
     MOV AL ,10010000B         
     OUT CTRLWORD , AL        ; Set Control Word
 
@@ -55,9 +57,12 @@
     ; port_B --> output 
     ; port_C --> (input-output)
 
-
+    ; Device B
     MOV AL ,10000000B         
     OUT BCTRLWORD , AL        ; Set Control Word
+
+    ; port_A --> output 
+    ; port_B --> output 
 
 ;-------------MAIN LOOP----------------
 
@@ -164,17 +169,45 @@ SLEEP PROC            ; Delay for DELAY cycles
 
 SLEEP ENDP
 
-DISPLAY PROC
+;---------------DISPLAY function------------------
 
-    ; ARBITARY VALUES FOR NOW
-    MOV AL, 0ABH
-    OUT PORTAB, AL
-    MOV AL, 0CH
-    OUT PORTBB, AL
+DISPLAY PROC
+    CALL GETRESULT
     
+    PUSH AX
+    PUSH BX
+    PUSH DX
+    
+    MOV AX, RESULT
+    MOV BX, 10
+
+    DIV BX
+    XCHG AX, DX
+    OUT PORTCB, AL
+    XCHG AX, DX
+    MOV DX, 0H
+
+    DIV BX
+    XCHG AX, DX
+    OUT PORTBB, AL
+    XCHG AX, DX
+    MOV DX, 0H
+
+    DIV BX
+    XCHG AX, DX
+    OUT PORTAB, AL
+    XCHG AX, DX
+    MOV DX, 0H
+
+
+    POP DX
+    POP BX
+    POP AX
     RET
 
 DISPLAY ENDP
+
+
 
 .EXIT
 
