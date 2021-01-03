@@ -71,6 +71,7 @@ MAIN PROC
     CALL GETSPEED
     CALL GETPRESSED
     CALL RUN
+    CALL GETRESULT
     CALL DISPLAY 
     JMP MAIN
 
@@ -81,39 +82,38 @@ MAIN ENDP
 ;-----------RUN function--------------
 
 RUN PROC 
-    ;check on dir and jump to cw or ccw  
-    TEST HDIR , 1
-    JNZ a
-    MOV CX , 4
-    LEA SI , STEPS
+    TEST HDIR , 1           ;check on half step 
+    JNZ a                   ;jump to a if not zero
+    MOV CX , 4              ;here code for full step,  cx = length of STEPS array
+    LEA SI , STEPS          ;si = offset of steps array
     JMP b
     a: 
-    LEA SI, HSTEPS
-    MOV CX , 8
+    LEA SI, HSTEPS          ;here code for half step , si = offset of hsteps array
+    MOV CX , 8              ;cx = length of hsteps array
     b:
-    TEST HDIR , 2 ; 2 means ccw and 0 means cw
+    TEST HDIR , 2           ;2 means ccw and 0 means cw
     JNZ CCW
     CW: ; clock wise 
         c1: 
-            CALL SLEEP
+            CALL SLEEP      ;sleep for delay seconds to control the speed of rotation
             MOV AL , [SI]
-            OUT PORTC , AL
-            INC SI
-            LOOP c1
+            OUT PORTC , AL  ;write on the motor the current step
+            INC SI          
+            LOOP c1         ;do this for all elements in the array
         RET
  
-    CCW: ; anti clock wise
+    CCW: ; counter clock wise
         DEC CX
-        ADD SI , CX
+        ADD SI , CX         ;si += cx - 1 , which is the last element in the array (step/hstep)
         INC CX
         c2:
-            CALL SLEEP
+            CALL SLEEP      ;sleep for delay seconds to control the speed of rotation
             MOV AL , [SI]
-            OUT PORTC , AL
+            OUT PORTC , AL  ;write on the motor the current step
             DEC SI
-            LOOP c2
+            LOOP c2         ;do this for all elements in the array
     RET
-RUN ENDP 
+RUN ENDP
 
 ;-----------------Get Speed---------------
  
@@ -172,7 +172,6 @@ SLEEP ENDP
 ;---------------DISPLAY function------------------
 
 DISPLAY PROC
-    CALL GETRESULT
     
     PUSH AX
     PUSH BX
