@@ -51,7 +51,13 @@
     
 * Full/Half step
 
-    ![on/off](/images/halfstepfullstep.gif "half/fullstep GIF")    
+    ![on/off](/images/halfstepfullstep.gif "half/fullstep GIF") 
+    
+    
+* Adjusting speed
+
+    ![Speed](/images/speed.gif "speed GIF")    
+        
     
     
 
