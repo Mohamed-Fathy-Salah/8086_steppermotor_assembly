@@ -120,7 +120,7 @@ RUN PROC            ; 1- Check the direction button (DIC) to determine the step 
             LOOP c2               ; Do this for all elements in the array
 
     RET
-
+kkk
 RUN ENDP
 
 ;-----------------Get Speed---------------
@@ -152,13 +152,20 @@ GETSPEED ENDP
 
 ;---------------GETPRESSED function----------------- 
 
-GETPRESSED PROC
-    IN AL, PORTC            ; read the content of port c
-    AND AL , RHS
-    MOV BX ,16
-    DIV BX
-    MOV HDIR , AL
+REVERSE PROC           ; Update HDIR (direction variable) by :
+                       ; 11 if Rotate Switch is pressed  and HS switch is pressed
+                       ; 10 if Rotate Switch is pressed  and HS switch is release
+                       ; 01 if Rotate Switch is released and HS switch is pressed
+                       ; 00 if Rotate Switch is released and HS switch is release    
+
+    IN  AL , PORTAC            ; Read the content of port_C
+    AND AL , RHS               ; Take value of Rotate Switch and HS switch
+    MOV BX , 16         
+    DIV BX                     ; Shift AX right by 4 bits 
+    MOV HDIR , AL              ; Set HDIR by new value
+
     RET
+
 GETPRESSED ENDP
 
 ;---------------SLEEP function------------------
