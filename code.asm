@@ -125,26 +125,28 @@ RUN ENDP
 
 ;-----------------Get Speed---------------
  
-GETSPEED PROC       ;Get input from potentiometer to claculate and set Delay
+GETSPEED PROC       ; 1- Get input from potentiometer to calculate and set DELAY
+                    ; 2- Set and Reset Write bit of ADC (to converts analog value to digital vale)
+                    ; 3- Turn the LED on if the HDIR = 10/11 (step in reverse direction (CCW))
  
-    IN AL , PORTA              ; Get input from potentiometer
-    MOV BL , 35
-    MUL BL
-    ADD AX,06FFH
-    MOV DELAY , AX           ; Make delay its intial value
+    IN  AL , PORTAA             ; Get input from potentiometer in AL
+    MOV BL , 35                 
+    MUL BL                      ; AX = AX * BL 
+    ADD AX , 06FFH              ; Add AX to intial value of DELAY (initial value = the smallest value of DELAY) 
+    MOV DELAY , AX              ; DELAY = AX + intial value
 
-    MOV BL, HDIR
-    SHR BL,1
+    MOV BL , HDIR               ; Take value of HDIR
+    SHR BL , 1                  ; Take value of only Rotate switch
     MOV AL , BL
 
-    OR AL , 00000010B
-    OUT PORTB , AL             ; reset the write bits of ADC
+    OR  AL     , 010B           ; Check if AL = 1 , then turn led on else turn led off
+    OUT PORTAB , AL             ; reset the write bits of ADC
  
-    MOV CX , 00FFH             ; delay
+    MOV CX , 00FFH              ; delay
     convert: Loop convert
  
-    AND AL , 00000001B         
-    OUT PORTB , AL             ; set the write bits of ADC
+    AND AL     , 00000001B         
+    OUT PORTAB , AL             ; set the write bits of ADC
  
     RET
  
