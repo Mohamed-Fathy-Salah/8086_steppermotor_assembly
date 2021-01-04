@@ -16,18 +16,19 @@
 
 .MODEL SMALL
 
-.DATA                        ; Data segment
+.DATA                         ; ---------------------------------------Data segment------------------------------------------------------
 
-    PORTA EQU 10H            ; Address of port A
-    PORTB EQU 12H            ; Address of port B
-    PORTC EQU 14H            ; Address of port C
-    CTRLWORD EQU 16H         ; Addresse of port Control Word
+    ; Device_A ports
+    PORTAA EQU 10H            ; Address of port A of device A
+    PORTAB EQU 12H            ; Address of port B of device A
+    PORTAC EQU 14H            ; Address of port C of device A
+    CTRLWORDA EQU 16H         ; Addresse of port Control Word of device A
     
-                             ; Device B
-    PORTAB EQU 08H           ; Address of port A
-    PORTBB EQU 0AH           ; Address of port B
-    PORTCB EQU 0CH           ; Address of port C
-    BCTRLWORD EQU 0EH         ; Addresse of port Control Word
+    ; Device_B ports
+    PORTBA EQU 08H            ; Address of port A of device B
+    PORTBB EQU 0AH            ; Address of port B of device B
+    PORTBC EQU 0CH            ; Address of port C of device B
+    CTRLWORDB EQU 0EH         ; Addresse of port Control Word of device B
 
     DELAY  DW 0H             ; DELAY Value that will control the stepper motor speed
     HDIR    DB 00H           ; Direction of Stepper Motor (0/1) and (step / half step)
