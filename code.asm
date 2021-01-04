@@ -81,38 +81,46 @@ MAIN ENDP
 
 ;-----------RUN function--------------
 
-RUN PROC 
-    TEST HDIR , 1           ;check on half step 
-    JNZ a                   ;jump to a if not zero
-    MOV CX , 4              ;here code for full step,  cx = length of STEPS array
-    LEA SI , STEPS          ;si = offset of steps array
-    JMP b
+RUN PROC            ; 1- Check the direction button (DIC) to determine the step diection (cw/ccw)
+                    ; 2- Check the Step Mode button (HS) to determine the step diection (cw/ccw)
+                    ; 3- Run in the determined direction and in determined mode
+
+    TEST HDIR , 1                 ; Check on HS switch 
+    JNZ a                         ; If one then it Half step mode and jump to a
+    MOV CX , 4                    ; CX = length of Full steps array
+    LEA SI , STEPS                ; SI = offset of Full steps array
+    JMP b   
+
     a: 
-    LEA SI, HSTEPS          ;here code for half step , si = offset of hsteps array
-    MOV CX , 8              ;cx = length of hsteps array
+    LEA SI , HSTEPS               ; SI = offset of Half steps array
+    MOV CX , 8                    ; CX = length of Half steps array
+
     b:
-    TEST HDIR , 2           ;2 means ccw and 0 means cw
-    JNZ CCW
-    CW: ; clock wise 
+    TEST HDIR , 2                 ; Check the rotate direction 0--> clockwise and 1--> anticlock wise
+    JNZ  CCW                      ; Jump to CCW if 1
+
+    CW:                           ; Clock wise Direction
         c1: 
-            CALL SLEEP      ;sleep for delay seconds to control the speed of rotation
-            MOV AL , [SI]
-            OUT PORTC , AL  ;write on the motor the current step
-            INC SI          
-            LOOP c1         ;do this for all elements in the array
+            CALL SLEEP            ; Sleep for delay seconds to control the speed of rotation
+            MOV  AL     ,[SI]
+            OUT  PORTAC , AL      ; Write on the motor the current step
+            INC  SI          
+            LOOP c1               ; Do this for all elements in the array
         RET
  
-    CCW: ; counter clock wise
+    CCW:                          ; Anti clock wise direction
         DEC CX
-        ADD SI , CX         ;si += cx - 1 , which is the last element in the array (step/hstep)
+        ADD SI , CX               ; SI += CX - 1 , which is the last element in the array (step/hstep)
         INC CX
         c2:
-            CALL SLEEP      ;sleep for delay seconds to control the speed of rotation
-            MOV AL , [SI]
-            OUT PORTC , AL  ;write on the motor the current step
-            DEC SI
-            LOOP c2         ;do this for all elements in the array
+            CALL SLEEP            ; Sleep for delay seconds to control the speed of rotation
+            MOV  AL , [SI]
+            OUT  PORTAC , AL      ; Write on the motor the current step
+            DEC  SI
+            LOOP c2               ; Do this for all elements in the array
+
     RET
+
 RUN ENDP
 
 ;-----------------Get Speed---------------
