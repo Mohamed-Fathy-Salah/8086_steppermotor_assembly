@@ -154,7 +154,7 @@ GETSPEED ENDP
 
 ;---------------GETPRESSED function----------------- 
 
-REVERSE PROC           ; Update HDIR (direction variable) by :
+GETPRESSED PROC           ; Update HDIR (direction variable) by :
                        ; 11 if Rotate Switch is pressed  and HS switch is pressed
                        ; 10 if Rotate Switch is pressed  and HS switch is release
                        ; 01 if Rotate Switch is released and HS switch is pressed
