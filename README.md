@@ -1,4 +1,6 @@
 # 8086_steppermotor_assembly
+# Description
+
 # Used Devices
 - 8086 microprocessor
 - 74HC373 Latch
@@ -59,20 +61,6 @@
     ![Speed](/images/speed.gif "speed GIF")    
         
     
-    
-## things to be added to readme file
- - Explanation for the code flow
- - Explanation how we control speed in motor 
- - Explanation for each component :
-   - stepper motor 
-   - 8255A - I/0 device
-   - 74hc373 latch
-   - l293d driver
-   - ADC0804 converter
- - images for components
- - Explanation of half and full cycle
- - Explanation for getspeed and getdsplyd equation and function
- - Explanation for display function    
 
 ## Team members
 - [Mohamed Fathy](https://github.com/Mohamed-Fathy-Salah)
