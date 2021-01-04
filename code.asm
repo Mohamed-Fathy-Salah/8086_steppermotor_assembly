@@ -120,7 +120,7 @@ RUN PROC            ; 1- Check the direction button (DIC) to determine the step 
             LOOP c2               ; Do this for all elements in the array
 
     RET
-kkk
+    
 RUN ENDP
 
 ;-----------------Get Speed---------------
