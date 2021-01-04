@@ -60,7 +60,7 @@
         
     
     
-###### things to be added to readme file
+## things to be added to readme file
  - Explanation for the code flow
  - Explanation how we control speed in motor 
  - Explanation for each component :
