@@ -1,10 +1,18 @@
 
 ;Componants' place :
+
+    ; Device_A :
     ; ADC (potentiometer)       on port A
     ; Direction led             on port B 0
-    ; Write bit of ADC          on port B 1
-    ; Rotate Switch             on port C 5
+    ; Write bit of ADC (BLINK)  on port B 1
     ; Stepper motor (driver)    on port C 0-3
+    ; Half/full cycle Switch    on port B 4
+    ; Rotate Switch             on port B 5
+
+    ; Device_B :
+    ; led 7-segment 1           on port A 0-3
+    ; led 7-segment 2           on port B 0-3
+    ; led 7-segment 3           on port C 0-3
 
 .MODEL SMALL
 
