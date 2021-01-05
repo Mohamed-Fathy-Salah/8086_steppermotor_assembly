@@ -6,8 +6,8 @@
     ; Direction led             on port B 0
     ; Write bit of ADC (BLINK)  on port B 1
     ; Stepper motor (driver)    on port C 0-3
-    ; Half/full cycle Switch    on port B 4
-    ; Rotate Switch             on port B 5
+    ; Half/full cycle Switch    on port C 4
+    ; Rotate Switch             on port C 5
 
     ; Device_B :
     ; led 7-segment 1           on port A 0-3
