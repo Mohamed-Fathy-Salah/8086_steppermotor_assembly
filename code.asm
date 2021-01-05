@@ -77,14 +77,14 @@
     ; port_C --> output
     
 
-;-------------MAIN LOOP----------------
+;---------------MAIN LOOP-----------------
 
 MAIN PROC
 
     CALL GETSPEED
     CALL GETPRESSED
     CALL RUN
-    CALL GETRESULT
+    CALL GETDSPLYD
     CALL DISPLAY 
     JMP MAIN
 
