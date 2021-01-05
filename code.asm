@@ -224,19 +224,19 @@ DISPLAY ENDP
 
 ;---------------GETRESULT function------------------
 
-GETRESULT PROC
+GETDSPLYD PROC        ; Calculate the speed motor value to be diplayed on three 7-seg display
 
-    MOV AX,DELAY
-    MOV BX,64H
-    MUL BX
-    MOV BX,185CH
-    DIV BX
-    MOV RESULT,80H
-    SUB RESULT,AX
+    MOV AX ,DELAY             ; Take the value of DELAY
+    MOV BX ,64H               
+    MUL BX                    ; DX,AX = AX * 100
+    MOV BX ,185CH
+    DIV BX                    ; AX = DX,AX / max value of delay
+    MOV DSPLYD ,80H
+    SUB DSPLYD ,AX            ; DSPLYD = 128 - AX  ----> the value that will be sdplayed on screen
 	
     RET
 
-GETRESULT ENDP
+GETDSPLYD ENDP
 
 .EXIT
 
