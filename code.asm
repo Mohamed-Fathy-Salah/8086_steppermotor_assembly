@@ -197,26 +197,26 @@ SLEEP ENDP
 
 ;---------------DISPLAY function------------------
 
-DISPLAY PROC
+DISPLAY PROC          ; Seprate the DSPLYD value into 3 numbers and display them on corresponding 7-seg
     
-    MOV AX, RESULT
-    MOV BX, 10
-	MOV DX ,0 
+    MOV AX , DSPLYD          ; Take the value of DSPLYD that will be dislpayed on screen
+    MOV BX , 10
+	MOV DX , 0 
 	
-    DIV BX
-    XCHG AL, DL
-    OUT PORTCB, AL
-    XCHG AL, DL
-    MOV DL, 0
+    DIV  BX
+    XCHG AL , DL
+    OUT  PORTBC , AL         ; Display the most left number in DSPLYD on the third 7-seg 
+    XCHG AL , DL
+    MOV  DL , 0
 
-    DIV BX
-    XCHG AL, DL
-    OUT PORTBB, AL
-    MOV AL, DL
+    DIV  BX
+    XCHG AL , DL
+    OUT  PORTBB , AL         ; Display the middle number in DSPLYD on the second 7-seg
+    MOV  AL , DL
 
-    DIV BL
-	MOV AL,AH
-    OUT PORTAB, AL
+    DIV  BL
+	MOV  AL , AH
+    OUT  PORTBA , AL         ; Display the most Right number in DSPLYD on the first 7-seg
 
     RET
 
