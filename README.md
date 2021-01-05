@@ -1,4 +1,12 @@
-# 8086_steppermotor_assembly
+<h1 align="center">8086_steppermotor_assembly</h1>
+
+<p align="center">
+  
+  <br>
+  <i>Using 8086 Microprocessor to control Stepper motor direction and speed 
+    <br> then showing the current speed value on 7-seg display and the direction through Blinking Led.</i>
+  <br>
+</p>
 
 ## Table of contents
 
