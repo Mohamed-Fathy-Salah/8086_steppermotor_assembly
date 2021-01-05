@@ -1,4 +1,13 @@
 # 8086_steppermotor_assembly
+
+## Table of contents
+
+- [Description](#Description)
+- [Used Devices](#Used-Devices)
+- [Circuit Diagram](#Circuit-Diagram)
+- [Features](#Features)
+- [Team members](#Team-members)
+
 # Description
 
 # Used Devices
