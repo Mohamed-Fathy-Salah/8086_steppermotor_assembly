@@ -30,17 +30,18 @@
     PORTBC EQU 0CH            ; Address of port C of device B
     CTRLWORDB EQU 0EH         ; Addresse of port Control Word of device B
 
-    DELAY  DW 0H             ; DELAY Value that will control the stepper motor speed
-    HDIR    DB 00H           ; Direction of Stepper Motor (0/1) and (step / half step)
-    RHS DB 30H               ; direction and half step switches at port B
-    RESULT DW 0H             ; to hold the value for the 7-seg display
+    ; Variables
+    DELAY   DW 0H             ; DELAY Value that will control the stepper motor speed
+    HDIR    DB 00H            ; Direction of Stepper Motor (0/1) and (step / half ) step
+    RHS     DB 30H            ; Address of Rotate and half/full step mode switches at port B
+    DSPLYD  DW 0H             ; Value that will displayed on the display
 
-    STEPS  DB 00000011B,     ; Full Step Mode
+    STEPS  DB 00000011B,      ; Full Step Mode Array
               00000110B, 
               00001100B, 
               00001001B   
 
-    HSTEPS DB 00000001B, ; half step
+    HSTEPS DB 00000001B,      ; Half step Mode Array
               00000011B, 
 		      00000010B, 
 			  00000110B, 
@@ -50,7 +51,7 @@
 			  00001001B
 
 
-.STACK  10H                  ; Stack segment
+.STACK  10H                   ; ---------------------------------------Stack segment-----------------------------------------------------
 
 
 .CODE                        ; Code segment
