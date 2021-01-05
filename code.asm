@@ -54,25 +54,28 @@
 .STACK  10H                   ; ---------------------------------------Stack segment-----------------------------------------------------
 
 
-.CODE                        ; Code segment
+.CODE                         ; ----------------------------------------Code segment------------------------------------------------------
 
 .STARTUP
 
-;---------Configration of PORTS---------
-    ; Device A
+;----------Configration of PORTS----------
+
+    ; Device_A
     MOV AL ,10010000B         
-    OUT CTRLWORD , AL        ; Set Control Word
+    OUT CTRLWORDA , AL        ; Set Control Word
 
     ; port_A --> input 
     ; port_B --> output 
     ; port_C --> (input-output)
 
-    ; Device B
+    ; Device_B
     MOV AL ,10000000B         
-    OUT BCTRLWORD , AL        ; Set Control Word
+    OUT CTRLWORDB , AL        ; Set Control Word
 
     ; port_A --> output 
     ; port_B --> output 
+    ; port_C --> output
+    
 
 ;-------------MAIN LOOP----------------
 
