@@ -87,7 +87,7 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
   </br></br></br></br></br></br></br></br></br>
   <hr>
   
-  
+</br></br>
 ## Controlling the motor's speed
 
 In our circuit we can control the speed of the motor by two different ways, the first way was through change (half / full) cycle switch and the second way was through change the potentiometer slider place and we can use the two ways in same time. the two ways have different techniques to change speed which :
@@ -111,7 +111,7 @@ HSTEPS DB       00000001B,      	; Half Step Mode Array
 - **the Potentiometer Slider :** in this way we control the speed by really different technique as we change the value of delay between the steps sent to the motor , there are 11 values we can obtained through the Potentiometer by using ADC converter to convert the analog value of the potentiometer to digital value we can use and obtain delay value from it , the range of the delay value (06FFH - 185CH).
 
 -  By using the both way in same time we can obtain 22  mode for the motor's speed by different values of delay.
-
+</br></br></br></br>
 ## GETSPEED function
 
 In this function we obtain the digital value from the potentiometer and by using ADC converter it converted into digital value that we can modified any used in changing the delay time value that used between the steps in `RUN function` .
