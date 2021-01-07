@@ -66,7 +66,7 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
 <h5> analog to digital converter used to read analog voltage from potentiometer and convert it to digital then send this value to the I/O device </h5>
 <ul>
     <li> CS---> is grounded to operate the ADC (active low) </li>
-    <li> WR---> set and rest this bit to convert the data from digital to analog </li> 
+    <li> WR---> set and reset this bit to convert the data from analog to digital </li> 
     <li> RD---> after the conversion from analog to digital we set this pin to low to bring data from internal registers to output pins (DB0-DB7) </li>
     <li> DB0-DB7---> we get the digital data which is equivalent to the voltage on potentiometer and this value will be varied to get different values of motor speed (varying the delay between every step) </li>
   </ul>
