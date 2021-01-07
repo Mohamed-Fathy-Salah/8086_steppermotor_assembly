@@ -83,7 +83,8 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
    <b>L293D Driver</b>
    
 <img src="images/components/l293d.PNG" align="right">
-  <p>l.,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa </p>
+ l293d driver is a 16-pin Motor Driver used as interface between the microcontoller and the stepper motor , it can control  two DC motors at the same time in any direction
+it used to drive the stepper motor as the microcontroller can't provide current required by the motor
   </br></br></br></br></br></br></br></br></br>
   <hr>
   
