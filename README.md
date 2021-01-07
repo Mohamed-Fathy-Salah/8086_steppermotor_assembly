@@ -74,6 +74,31 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
   </br></br></br></br></br></br></br></br></br>
   <hr>
   
+  
+## Controlling the motor's speed
+
+In our circuit we can control the speed of the motor by two different ways, the first way was through change (half / full) cycle switch and the second way was through change the potentiometer slider place and we can use the two ways in same time. the two ways have different techniques to change speed which :
+
+- **(half / full) cycle switch :** change the speed of the motor only in two modes the full cycle and the half cycle mode , and it can be achieved by making two arrays of steps and by using one of them with the stepper motor it will step corresponding to the selected array and the array selected according to the (half / full) cycle switch.
+ ```
+STEPS  DB       00000011B,              ; Full Step Mode Array
+                 00000110B, 
+                 00001100B, 
+                 00001001B   
+
+HSTEPS DB       00000001B,      	; Half Step Mode Array
+                 00000011B, 
+                 00000010B, 
+                 00000110B, 
+                 00000100B, 
+                 00001100B, 
+                 00001000B,
+                 00001001B
+ ``` 
+- **the Potentiometer Slider :** in this way we control the speed by really different technique as we change the value of delay between the steps sent to the motor , there are 11 values we can obtained through the Potentiometer by using ADC converter to convert the analog value of the potentiometer to digital value we can use and obtain delay value from it , the range of the delay value (06FFH - 185CH).
+
+-  By using the both way in same time we can obtain 22  mode for the motor's speed by different values of delay.
+
 ## Used Devices
 - 8086 microprocessor
 - 74HC373 Latch
