@@ -112,6 +112,15 @@ HSTEPS DB       00000001B,      	; Half Step Mode Array
 
 -  By using the both way in same time we can obtain 22  mode for the motor's speed by different values of delay.
 
+### GETSPEED function
+---
+In this function we obtain the digital value from the potentiometer and by using ADC converter it converted into digital value that we can modified any used in changing the delay time value that used between the steps in `RUN function` .
+In our function we create an equation to compute the delay time from this digital value as we multiply this value by `35` and add it to the initial value of the delay time that we initialized , which equal to `06FFH`. that will make the range of the delay value between (`06FFH` and `185CH`). and this equation will be :
+
+>    DELAY  = 06FFH + ( 35 * potentiometer value )
+
+the second operation that this function do, was set and reset write bit of ADC converter to help in the converting process and turn on and off the direction lamp after check the reverse switch in the previous function  
+
 ## Used Devices
 - 8086 microprocessor
 - 74HC373 Latch
