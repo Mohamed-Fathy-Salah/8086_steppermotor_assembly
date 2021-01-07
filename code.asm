@@ -43,15 +43,15 @@
 
     HSTEPS DB 00000001B,      ; Half step Mode Array
               00000011B, 
-		      00000010B, 
-			  00000110B, 
-			  00000100B, 
-			  00001100B, 
-			  00001000B,
-			  00001001B
+	      00000010B, 
+	      00000110B, 
+	      00000100B, 
+  	      00001100B, 
+	      00001000B,
+	      00001001B
 
 
-.STACK  10H                   ; ---------------------------------------Stack segment-----------------------------------------------------
+.STACK  10H                   ; ---------------------------------------Stack segment------------------------------------------------------
 
 
 .CODE                         ; ----------------------------------------Code segment------------------------------------------------------
@@ -167,7 +167,7 @@ GETSPEED ENDP
 
 ;---------------GETPRESSED function----------------- 
 
-GETPRESSED PROC           ; Update HDIR (direction variable) by :
+GETPRESSED PROC        ; Update HDIR (direction variable) by :
                        ; 11 if Rotate Switch is pressed  and HS switch is pressed
                        ; 10 if Rotate Switch is pressed  and HS switch is release
                        ; 01 if Rotate Switch is released and HS switch is pressed
@@ -187,13 +187,13 @@ GETPRESSED ENDP
 
 SLEEP PROC            ; Delay for DELAY cycles 
 
-    PUSH CX                  ; Store old counter value in stack
+    PUSH CX                   ; Store old counter value in stack
 
-    MOV CX, DELAY            ; Set new counter by DELAY value
-    delayloop:               ; Loop for DELAY
+    MOV CX, DELAY             ; Set new counter by DELAY value
+    delayloop:                ; Loop for DELAY
     LOOP delayloop
 
-    POP CX                   ; Destore old counter value from stack
+    POP CX                    ; Destore old counter value from stack
 
     RET	
 
