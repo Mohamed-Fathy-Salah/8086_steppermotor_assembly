@@ -111,6 +111,7 @@ HSTEPS DB       00000001B,      	; Half Step Mode Array
 - **the Potentiometer Slider :** in this way we control the speed by really different technique as we change the value of delay between the steps sent to the motor , there are 11 values we can obtained through the Potentiometer by using ADC converter to convert the analog value of the potentiometer to digital value we can use and obtain delay value from it , the range of the delay value (06FFH - 185CH).
 
 -  By using the both way in same time we can obtain 22  mode for the motor's speed by different values of delay.
+
 </br></br></br></br>
 ## GETSPEED function
 
@@ -120,6 +121,13 @@ In our function we create an equation to compute the delay time from this digita
 >    DELAY  = 06FFH + ( 35 * potentiometer value )
 
 the second operation that this function do, was set and reset write bit of ADC converter to help in the converting process and turn on and off the direction lamp after check the reverse switch in the previous function  
+
+</br></br></br></br>
+## GETDSPLYD function
+In this function we change the DELAY value into a number that can be displayed on the screen , as we change delay value into percentage number between ` 28% and 100% ` that refer to speed of the stepper motor , and we achieve this by calculate the percentage of the delay value by divided the current delay value by the maxmuim value of the delay that we calculated before and multiply the result by 100 to get the percentage , then revert this percentage range to make it refer to the speed instead of the delay and we achieve that by our equation :
+> DSPLYD = 100 - ( (current delay value * 100) / Max delay value ) + 28
+
+and by this equation we convert delay value into speed that can be represented on our screen.
 
 ## Used Devices
 - 8086 microprocessor
