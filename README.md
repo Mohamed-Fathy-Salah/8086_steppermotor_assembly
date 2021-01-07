@@ -63,7 +63,13 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
   <b>ADC</b>
 
 <img src="https://github.com/Mohamed-Fathy-Salah/8086_steppermotor_assembly/blob/main/images/ADC.PNG" align="right">
-  <p>l.,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa,khmjgnhgfdfghm,k.,mmnnbvcdxscvbnm,.,mmhngbfdsdfghnm,.kjhjgfdsa </p>
+ analog to digital converter used to read analog voltage from potentiometer and convert it to digital then send this value to the I/O device
+ - ==CS==---> is grounded to operate the ADC (active low)
+ - ==WR==---> set and rest this bit to convert the data from digital to analog 
+ - ==RD==---> after the conversion from analog to digital we set this pin to low to bring data 
+from internal registers to output pins (DB0-DB7)
+ - ==DB0-DB7==---> we get the digital data which is equivalent to the voltage on potentiometer
+and this value will be varied to get different values of motor speed (varying the delay between every step )
   </br></br></br></br></br></br></br></br></br>
   <hr>
   
