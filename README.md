@@ -24,7 +24,6 @@ Several quick start options are available:
 - in order to run the [circuit](https://github.com/Mohamed-Fathy-Salah/8086_steppermotor_assembly/blob/main/stepper%20motor_project.pdsprj) you have to install at least proteus vertion 8. 
 - Clone the repo: `git clone https://github.com/Mohamed-Fathy-Salah/8086_steppermotor_assembly.git`
 
-## Description
 
 ## Code Flow
 
@@ -46,7 +45,6 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
 - Stepper Motor
 - ADC0804 Digital to Analog Converter
 - L293D Motor Driver Ic
-- 2N1711 NPN Transitor
 - Resistors
 - LED
 - Switch
@@ -59,7 +57,6 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
 * [Stepper Motor] - Stepper Motor
 * [ADC0804] - Digital to Analog Converter
 * [L293D] - Motor Driver Ic
-* [2N1711] -NPN transistor
 
  [8086]: <https://www.tutorialspoint.com/microprocessor/microprocessor_8086_pin_configuration.htm>
  [74HC373]: <https://assets.nexperia.com/documents/data-sheet/74HC_HCT373.pdf>
@@ -67,7 +64,6 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
  [Stepper Motor]: <https://www.monolithicpower.com/en/stepper-motors-basics-types-uses>
  [ADC0804]: <https://www.engineersgarage.com/knowledge_share/adc0804-pinout/> 
  [L293D]: <https://components101.com/l293d-pinout-features-datasheet>
- [2N1711]: <https://www.dummies.com/programming/electronics/diy-projects/electronics-projects-how-to-create-a-transistor-not-gate-circuit/>
  
  ## Circuit Diagram
  ![alt circuit](https://raw.githubusercontent.com/Mohamed-Fathy-Salah/8086_steppermotor_assembly/main/images/Circuit%20Diagram.PNG)
