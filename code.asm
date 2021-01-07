@@ -95,7 +95,7 @@ MAIN ENDP
 ;-----------RUN function--------------
 
 RUN PROC            ; 1- Check the direction button (DIC) to determine the step diection (cw/ccw)
-                    ; 2- Check the Step Mode button (HS) to determine the step diection (cw/ccw)
+                    ; 2- Check the Step Mode button (HS) to determine step mode (half / full) step
                     ; 3- Run in the determined direction and in determined mode
 
     TEST HDIR , 1                 ; Check on HS switch 
