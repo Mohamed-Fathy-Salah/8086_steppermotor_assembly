@@ -54,8 +54,22 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
 
 ## Components discription
 ### 8086
+<p>
+  8086 is a microprocessor that have 20 bit for address bus and 16 bit for data bus.
+  it's used here to control all the devices including the stepper motor , led , display
+  </p>
 <div style="display:inline-block; ">
-  <p style="width:80%;float:left; display:inline-block;"></p>
+  
+<ul style="width:66%;float:left; display:inline-block;">
+    <li> AD--->address/data bus . AD0-AD15 for data bus , AD0-AD19 for address bus </li>
+    <li> ALE---> address enable latch , a positive pulse generated each time the processor begins any operation. this signal indicates the availability of a valid address on the address/data lines</li> 
+    <li> RD--->used to read signal</li>
+    <li> WR--->write signal . used to write the data into the memory or the output device</li>
+    <li> RESET---> used ot restart the execution . it causes the processor to immediately terminate its present activity . this signal is active high for the first 4 clock cycles to reset the microprocessor</li>
+    <li> READY---> indicates that the device is ready to transfer data . when it's low it indicates wait state</li>
+    <li> HOLD--->indicates that external devices are requested to access the address/data buses </li>
+    <li> MN/MX---> minimum/ maximum . indicates what mode the processor is to operate in . when high it operates in minimum mode</li>
+  </ul>
   <img src="images/components/8086.PNG" style="display:inline-block;float:right" >
 </div>
 <hr>
@@ -69,8 +83,14 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
   <hr>
   
 ### latch
+<p>latch is used as a memory to get the address from the microprocessor to read from or write to the I/O devices</p>
 <div style="display:inline-block; ">
-  <p style="width:80%;float:left; display:inline-block;"></p>
+  <ul style="display:inline-block;width:70;float:left;">
+  <li>OE ---> enable output when low</li>
+  <li>D0-D7 ---> data input</li>
+  <li>Q0-Q7 ---> data output</li>
+  <li>LE ---> latch enable input</li>
+  </ul>
   <img src="images/components/latch.PNG" style="display:inline-block;float:right" >
 </div>
   <hr>
