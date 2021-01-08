@@ -11,8 +11,12 @@
 ## Table of contents
 
 - [Quick start](#Quick-start)
-- [Description](#Description)
+- [Code Flow](#Code-Flow)
 - [Used Devices](#Used-Devices)
+- [Components discription](#Components-discription)
+- [Controlling the motor's speed](#Controlling-the-motors-speed)
+- [GETSPEED function](#GETSPEED-function)
+- [GETDSPLYD function](#GETDSPLYD-function)
 - [Circuit Diagram](#Circuit-Diagram)
 - [Features](#Features)
 - [Team members](#Team-members)
@@ -36,6 +40,19 @@ In the `RUN` function it firstly checks the direction to see whether the motor w
 The remaining part related to the speed Display on the screen.</br>
 Then `GETDSPLYD` PROC calculate the speed of the motor that will be displayed on the 3-segments ranging from 28 to 100 depending on the minimum and the maximum delay value the motor can handle. and store the result in the DSPLYD global variable.</br>
 Finally the `DISPLAY` PROC which will simply take the value of the speed stored in the DSPLYD global variable and display it on the segments connected to the second i/o device.
+
+## Used Devices
+- 8086 microprocessor
+- 74HC373 Latch
+- 8255A I/O device
+- Stepper Motor
+- ADC0804 Digital to Analog Converter
+- L293D Motor Driver Ic
+- Resistors
+- LED
+- Switch
+- potentiometer
+- Battery
 
 ## Components discription
 
@@ -145,18 +162,6 @@ and by this equation we convert delay value into speed that can be represented o
 
 </br>
 
-## Used Devices
-- 8086 microprocessor
-- 74HC373 Latch
-- 8255A I/O device
-- Stepper Motor
-- ADC0804 Digital to Analog Converter
-- L293D Motor Driver Ic
-- Resistors
-- LED
-- Switch
-- potentiometer
-- Battery
 
 ## Resources
 * [8086] - 8086 pinout
