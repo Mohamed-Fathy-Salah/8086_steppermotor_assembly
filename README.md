@@ -95,8 +95,7 @@ as we did in the project. </li>
    <b>L293D Driver</b>
    
 <img src="images/components/l293d.PNG" align="right">
- l293d driver is a 16-pin Motor Driver used as interface between the microcontoller and the stepper motor , it can control  two DC motors at the same time in any direction
-it used to drive the stepper motor as the microcontroller can't provide current required by the motor
+ l293d driver is a 16-pin Motor Driver used as interface between the microcontoller and the stepper motor, it used to drive the stepper motor as the microcontroller can't provide current required by the motor. The L293D is designed to provide up to 600 mA at voltages from 4.5 V to 36 V
   </br></br></br></br></br></br></br></br></br>
   <hr>
   
