@@ -54,6 +54,7 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
 
 ## Components discription
 ### 8086
+<img src="images/components/8086.PNG" align="right" >
 <p>
   8086 is a microprocessor that have 20 bit for address bus and 16 bit for data bus.
   it's used here to control all the devices including the stepper motor , led , display
@@ -70,19 +71,21 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
     <li> HOLD--->indicates that external devices are requested to access the address/data buses </li>
     <li> MN/MX---> minimum/ maximum . indicates what mode the processor is to operate in . when high it operates in minimum mode</li>
   </ul>
-  <img src="images/components/8086.PNG" style="display:inline-block;float:right" >
+  
 </div>
 <hr>
 
 ### 8255A
+<img src="images/components/8255A.PNG" align="right" >
 <div style="display:inline-block; ">
   <p style="width:80%;float:left; display:inline-block;">
   The 8255A is a general purpose programmable I/O device. It consists of 3 ports PORTA, PORTB and PORTC. And it has 3 modes of operation. Mode 0, Mode 1 and Mode 2 to control which ports are going to be input and output. In our circuit we used 2 8255A devices, one of them is configured to make port a, b, c as an output ports and the other one configured to make port a input and port b, c output and both of them operate in mode 0. </p>
-<img src="images/components/8255A.PNG" style="display:inline-block;float:right" >
+
 </div>
   <hr>
   
 ### latch
+<img src="images/components/latch.PNG" align="right" >
 <p>latch is used as a memory to get the address from the microprocessor to read from or write to the I/O devices</p>
 <div style="display:inline-block; ">
   <ul style="display:inline-block;width:70;float:left;">
@@ -91,11 +94,12 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
   <li>Q0-Q7 ---> data output</li>
   <li>LE ---> latch enable input</li>
   </ul>
-  <img src="images/components/latch.PNG" style="display:inline-block;float:right" >
+  
 </div>
   <hr>
   
 ### ADC
+<img src="images/ADC.PNG" align="right" >
 <h5> analog to digital converter used to read analog voltage from potentiometer and convert it to digital then send this value to the I/O device </h5>
 <div style="display:inline-block; ">
 <ul style="width:66%;float:left; display:inline-block;">
@@ -104,11 +108,12 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
     <li> RD---> after the conversion from analog to digital we set this pin to low to bring data from internal registers to output pins (DB0-DB7) </li>
     <li> DB0-DB7---> we get the digital data which is equivalent to the voltage on potentiometer and this value will be varied to get different values of motor speed (varying the delay between every step) </li>
   </ul>
-  <img src="images/ADC.PNG" style="display:inline-block;float:right" >
+  
 </div>
   <hr>
   
 ### Stepper motor
+<img src="images/components/STEPPER%20MOTOR.PNG" align="right" >
 <div style="display:inline-block; ">
   <span style="width:74%;float:left; display:inline-block;">
 <p>
@@ -124,12 +129,13 @@ as we did in the project. </li>
   </ul>
 </p>
   </span>
-  <img src="images/components/STEPPER%20MOTOR.PNG" style="display:inline-block;float:right" >
+  
 </div>
 
   <hr>
   
 ### L293D Driver
+  <img src="images/components/l293d.PNG" align="right" >
   <div style="display:inline-block;">
   <span style="width:80%;float:left; display:inline-block;">
  l293d driver is a 16-pin Motor Driver used as interface between the microcontoller and the stepper motor, it used to drive the stepper motor as the microcontroller can't provide current required by the motor. The L293D is designed to provide up to 600 mA at voltages from 4.5 V to 36 V <br>
@@ -142,7 +148,7 @@ L293D Pins:
   <li>  OUT1 .. OUT4 : Four output pins are connected to the stepper motor </li>
   </ul>
   </span>
-  <img src="images/components/l293d.PNG" style="display:inline-block;float:right" >
+  
 </div> 
 
   <hr>
