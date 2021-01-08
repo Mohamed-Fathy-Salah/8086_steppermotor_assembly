@@ -53,41 +53,44 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
 - Battery
 
 ## Components discription
+### 8086
+<div style="display:inline-block; ">
+  <p style="width:80%;float:left; display:inline-block;"></p>
+  <img src="images/components/8086.PNG" style="display:inline-block;float:right" >
+</div>
+<hr>
 
-<b>8086</b>
-
-<img src="images/components/8086.PNG" align="right">
-  <p></p>
-  <hr>
-
-
-<b>8255A</b>
-
-<img src="images/components/8255A.PNG" align="right">
-  <p>  The 8255A is a general purpose programmable I/O device. It consists of 3 ports PORTA, PORTB and PORTC. And it has 3 modes of operation. Mode 0, Mode 1 and Mode 2 to control which ports are going to be input and output. In our circuit we used 2 8255A devices, one of them is configured to make port a, b, c as an output ports and the other one configured to make port a input and port b, c output and both of them operate in mode 0. </p>
-  <hr>
-  
-  <b>latch</b>
-
-<img src="images/components/latch.PNG" align="right">
-  <p></p>
+### 8255A
+<div style="display:inline-block; ">
+  <p style="width:80%;float:left; display:inline-block;">
+  The 8255A is a general purpose programmable I/O device. It consists of 3 ports PORTA, PORTB and PORTC. And it has 3 modes of operation. Mode 0, Mode 1 and Mode 2 to control which ports are going to be input and output. In our circuit we used 2 8255A devices, one of them is configured to make port a, b, c as an output ports and the other one configured to make port a input and port b, c output and both of them operate in mode 0. </p>
+<img src="images/components/8255A.PNG" style="display:inline-block;float:right" >
+</div>
   <hr>
   
-  <b>ADC</b>
-
-<img src="images/ADC.PNG" align="right">
+### latch
+<div style="display:inline-block; ">
+  <p style="width:80%;float:left; display:inline-block;"></p>
+  <img src="images/components/latch.PNG" style="display:inline-block;float:right" >
+</div>
+  <hr>
+  
+### ADC
 <h5> analog to digital converter used to read analog voltage from potentiometer and convert it to digital then send this value to the I/O device </h5>
-<ul>
+<div style="display:inline-block; ">
+<ul style="width:66%;float:left; display:inline-block;">
     <li> CS---> is grounded to operate the ADC (active low) </li>
     <li> WR---> set and reset this bit to convert the data from analog to digital </li> 
     <li> RD---> after the conversion from analog to digital we set this pin to low to bring data from internal registers to output pins (DB0-DB7) </li>
     <li> DB0-DB7---> we get the digital data which is equivalent to the voltage on potentiometer and this value will be varied to get different values of motor speed (varying the delay between every step) </li>
   </ul>
+  <img src="images/ADC.PNG" style="display:inline-block;float:right" >
+</div>
   <hr>
   
-  <b>Stepper motor</b>
-
-<img src="images/components/STEPPER%20MOTOR.PNG" align="right">
+### Stepper motor
+<div style="display:inline-block; ">
+  <span style="width:74%;float:left; display:inline-block;">
 <p>
   - DC motor that move in discrete steps giving the illusion of rotation </br>
   - It devides the complete rotation into number of steps ,Each stepper motor will have fixed step      angle</br>
@@ -100,11 +103,15 @@ as we did in the project. </li>
   <li><h5>Bipolar :- </h5> has only 4 wires comming out from two coils ,there is no common wires , it can't be used as unipolar </li>
   </ul>
 </p>
+  </span>
+  <img src="images/components/STEPPER%20MOTOR.PNG" style="display:inline-block;float:right" >
+</div>
+
   <hr>
   
-   <b>L293D Driver</b>
-   
-<img src="images/components/l293d.PNG" align="right">
+### L293D Driver
+  <div style="display:inline-block;">
+  <span style="width:80%;float:left; display:inline-block;">
  l293d driver is a 16-pin Motor Driver used as interface between the microcontoller and the stepper motor, it used to drive the stepper motor as the microcontroller can't provide current required by the motor. The L293D is designed to provide up to 600 mA at voltages from 4.5 V to 36 V <br>
 L293D Pins:
 <ul>
@@ -114,6 +121,10 @@ L293D Pins:
   <li> IN1 .. IN4 : Four input pins are connected to port A in 8255 </li>
   <li>  OUT1 .. OUT4 : Four output pins are connected to the stepper motor </li>
   </ul>
+  </span>
+  <img src="images/components/l293d.PNG" style="display:inline-block;float:right" >
+</div> 
+
   <hr>
   
 ## Controlling the motor's speed
@@ -214,4 +225,3 @@ and by this equation we convert delay value into speed that can be represented o
 - [Ahmed Nashaat](https://github.com/AhmadNashaat0)
 - [Ahmed Yasser](https://github.com/ahmadyasser01)
 - [Shahenda Hamdy](https://github.com/shahendahamdy)
-
