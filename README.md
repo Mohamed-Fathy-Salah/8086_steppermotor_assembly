@@ -181,6 +181,12 @@ HSTEPS DB       00000001B,      	; Half Step Mode Array
 
 </br>
 
+## DISPLAY function
+in this function we get the value of `DSPLYD` that holds the value that will be displayed on the displays .
+the value of `DSPLYD` is [28,100] so we get each one of the 3 digits of it and assign it to the corresponding 7-seg display hence displaying the current speed
+
+</br>
+
 ## GETSPEED function
 
 In this function we obtain the digital value from the potentiometer and by using ADC converter it converted into digital value that we can modified any used in changing the delay time value that used between the steps in `RUN function` .
