@@ -101,7 +101,7 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
   <hr>
   
 ### ADC
-<img src="images/ADC.PNG" align="right" >
+<img src="images/components/ADC.PNG" align="right" >
 <h5> analog to digital converter used to read analog voltage from potentiometer and convert it to digital then send this value to the I/O device </h5>
 <div style="display:inline-block; ">
 <ul style="width:66%;float:left; display:inline-block;">
