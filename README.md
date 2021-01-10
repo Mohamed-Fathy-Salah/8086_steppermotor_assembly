@@ -44,7 +44,7 @@ Finally the `DISPLAY` PROC which will simply take the value of the speed stored 
 - 74HC373 Latch
 - 8255A I/O device
 - Stepper Motor
-- ADC0804 Digital to Analog Converter
+- ADC0804 Analog to Digital Converter
 - L293D Motor Driver Ic
 - Resistors
 - LED
