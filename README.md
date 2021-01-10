@@ -15,6 +15,7 @@
 - [Used Devices](#Used-Devices)
 - [Components discription](#Components-discription)
 - [Controlling the motor's speed](#Controlling-the-motors-speed)
+- [DISPLAY function](#DISPLAY-function)
 - [GETSPEED function](#GETSPEED-function)
 - [GETDSPLYD function](#GETDSPLYD-function)
 - [Circuit Diagram](#Circuit-Diagram)
@@ -23,7 +24,7 @@
 
 ## Quick start
 
-- in order to run the [circuit](https://github.com/Mohamed-Fathy-Salah/8086_steppermotor_assembly/blob/main/stepper%20motor_project.pdsprj) you have to install at least proteus vertion 8. 
+- in order to run the [circuit](https://github.com/Mohamed-Fathy-Salah/8086_steppermotor_assembly/blob/main/stepper%20motor_project.pdsprj) you have to install at least proteus vertion 8.9 . 
 - Clone the repo: `git clone https://github.com/Mohamed-Fathy-Salah/8086_steppermotor_assembly.git`
 
 
