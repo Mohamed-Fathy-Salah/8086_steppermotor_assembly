@@ -39,6 +39,10 @@
     STEPS  DB 00000011B,      ; Full Step Mode Array
               00000110B, 
               00001100B, 
+              00001001B,
+			  00000011B,      
+              00000110B, 
+              00001100B, 
               00001001B   
 
     HSTEPS DB 00000001B,      ; Half step Mode Array
@@ -49,6 +53,7 @@
   	      00001100B, 
 	      00001000B,
 	      00001001B
+	II DW 0 				  ;index for stepping
 
 
 .STACK  10H                   ; ---------------------------------------Stack segment------------------------------------------------------
@@ -86,6 +91,7 @@ MAIN PROC
     CALL RUN
     CALL GETDSPLYD
     CALL DISPLAY 
+	CALL SLEEP
     JMP MAIN
 
     RET
@@ -100,38 +106,37 @@ RUN PROC            ; 1- Check the direction button (DIC) to determine the step 
 
     TEST HDIR , 1                 ; Check on HS switch 
     JNZ a                         ; If one then it Half step mode and jump to a
-    MOV CX , 4                    ; CX = length of Full steps array
     LEA SI , STEPS                ; SI = offset of Full steps array
     JMP b   
-
     a: 
     LEA SI , HSTEPS               ; SI = offset of Half steps array
-    MOV CX , 8                    ; CX = length of Half steps array
-
     b:
     TEST HDIR , 2                 ; Check the rotate direction 0--> clockwise and 1--> anticlock wise
     JNZ  CCW                      ; Jump to CCW if 1
 
     CW:                           ; Clock wise Direction
-        c1: 
-            CALL SLEEP            ; Sleep for delay seconds to control the speed of rotation
-            MOV  AL     ,[SI]
-            OUT  PORTAC , AL      ; Write on the motor the current step
-            INC  SI          
-            LOOP c1               ; Do this for all elements in the array
+		
+		ADD SI,II			  ; mov to the inde
+        MOV  AL     ,[SI]
+        OUT  PORTAC , AL      ; Write on the motor the current step
+		CMP II , 7			  ; (ii == 7 ) ? ii =0 : ii++
+		JZ n
+		INC II
+		RET
+		n:
+        MOV II , 0
         RET
  
     CCW:                          ; Anti clock wise direction
-        DEC CX
-        ADD SI , CX               ; SI += CX - 1 , which is the last element in the array (step/hstep)
-        INC CX
-        c2:
-            CALL SLEEP            ; Sleep for delay seconds to control the speed of rotation
-            MOV  AL , [SI]
-            OUT  PORTAC , AL      ; Write on the motor the current step
-            DEC  SI
-            LOOP c2               ; Do this for all elements in the array
-
+        ADD SI , II               ; SI += CX - 1 , which is the last element in the array (step/hstep)
+        MOV  AL , [SI]
+        OUT  PORTAC , AL          ; Write on the motor the current step
+		CMP II,0				  ; (ii == 0 ) ? ii = 7 : ii--
+		JZ m
+		DEC II
+		RET
+		m:
+		MOV II,7
     RET
     
 RUN ENDP
